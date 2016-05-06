@@ -27,10 +27,9 @@ function generateLevel(level) {
 			allowedOperations: null,
 			usefulTiles: null,
 			uselessTiles: null,
-			level: null
+			map: null
 		}
 	};
-
 
 	var genBaseRange = function(generatorState) {
 		generatorState.baseRange.from = 0;
@@ -126,14 +125,14 @@ function generateLevel(level) {
 		}
 	};
 
-	var genLevel = function(generatorState) {
+	var genMap = function(generatorState) {
 		var tiles = generatorState.usefulTiles.concat(generatorState.uselessTiles);
 
-		var level = new Array(generatorState.size);
+		var map = new Array(generatorState.size);
 		for (var y= 0; y < generatorState.size; y++) {
-			level[y] = new Array(generatorState.size);
+			map[y] = new Array(generatorState.size);
 			for (var x   = 0; x < generatorState.size; x++) {
-				level[y][x] = null;
+				map[y][x] = null;
 			}
 		}
 
@@ -143,15 +142,15 @@ function generateLevel(level) {
 			var x = Math.round(generatorState.rng() * (generatorState.size - 1));
 			var y = Math.round(generatorState.rng() * (generatorState.size - 1));
 
-			if(level[y][x]) {
-				tiles.push(level[x][y]);
-				level[y][x] = null;
+			if(map[y][x]) {
+				tiles.push(map[x][y]);
+				map[y][x] = null;
 			}
 
-			level[y][x] = tile;
+			map[y][x] = tile;
 		}
 
-		generatorState.level = level;
+		generatorState.map = map;
 	}
 
 	generatorState = getGeneratorState(level);
@@ -165,7 +164,7 @@ function generateLevel(level) {
 	genAllowedOperations(generatorState);
 	genUsefulTiles(generatorState);
 	genUselessTiles(generatorState);
-	genLevel(generatorState);
+	genMap(generatorState);
 
 	return generatorState;
 }

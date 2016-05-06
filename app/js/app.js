@@ -13,14 +13,28 @@ var stage = pixySetuped[1];
 renderer.backgroundColor = 0xcccccc;
 
 //generated level object
-var generatedLevel = generateLevel(1);
+var generatedLevel;
+
+function loadLevel(level) {
+	for (var i = stage.children.length - 1; i >= 0; i--) {
+		stage.removeChild(stage.children[i]);
+	}
+	generatedLevel = generateLevel(level);
+
+	setupTopPanel();
+	setupSquares();
+	setupPlayer("Linda");
+}
+
+function setupTopPanel() {
+	document.querySelector("#level").innerHTML = generatedLevel.level;
+	document.querySelector("#target").innerHTML = generatedLevel.target;
+}
 
 function setupSquares() {
 	//squares dimensions
 	var squareGap = 30;
 	var canvasBorder = 30;
-
-	var levelArray = generatedLevel.level;
 
 	var squareSize = (1000-(generatedLevel.size*squareGap+canvasBorder))/generatedLevel.size;
 
@@ -30,15 +44,17 @@ function setupSquares() {
 			var x = (squareSize + squareGap) * i + canvasBorder;
 			var y = (squareSize + squareGap) * j + canvasBorder;
 
-			var square = levelArray[i][j];
+			var square = generatedLevel.map[i][j];
+			var number = null;
+
 			if (square) {
-				var op = square.operator;
-				var number = new PIXI.Text(square.number, {font: 'bold 48px Arial', fill: 0xffffff, align : 'center'});
+				op = square.operator;
+				number = new PIXI.Text(square.number, {font: 'bold 48px Arial', fill: 0xffffff, align : 'center'});
 				number.x = x + 10;
 				number.y = y + 10;
 			}
 			else {
-				var op = 'none';
+				op = 'none';
 			}
 
 			var graphics = new PIXI.Graphics();
@@ -60,16 +76,13 @@ function setupPlayer(name) {
 		name: name,
 		x: 0,
 		y: 0
-	}
-
-
+	};
 }
 
-setupSquares();
-setupPlayer("Linda");
+loadLevel(1);
 
 var render = function () {
 	renderer.render(stage);
 	requestAnimationFrame(render);
-}
+};
 render();
