@@ -13,13 +13,16 @@
  			rng: rng,
  			level: level,
  			baseRange: {
- 				from: null,
- 				to: null,
+ 				from: 0,
+ 				to: 0,
  			},
- 			size: null,
- 			previousTarget: null,
- 			target: null,
- 			targetOperations: null,
+ 			size: 0,
+ 			previousTarget: 0,
+ 			target: 0,
+ 			targetOperations: 0,
+ 			targetUsefulOperations: 0,
+ 			targetPossibilities: 0,
+ 			allowedOperators: null,
  			allowedOperations: null,
  			usefulTiles: null,
  			uselessTiles: null,
@@ -59,14 +62,22 @@
  	};
 
  	var genAllowedOperations = function(generatorState) {
+ 		var opr = null;
  		var ops = null;
  		if(generatorState.level <= 2) {
- 			ops = ["+"];
+ 			opr = ["+"];
+ 			ops = ["++"];
  		} else if(generatorState.level <= 5) {
- 			ops = ["+", "-"];
+ 			opr = ["+", "-"];
+ 			ops = ["++", "+-"];
+ 		} else if(generatorState.level <= 11) {
+ 			opr = ["+", "-", "*"];
+ 			ops = ["++", "+-", "**"];
  		} else {
- 			ops = ["+", "-", "*"];
+ 			opr = ["+", "-", "*", "/"];
+ 			ops = ["++", "+-", "**", "*/"];
  		}
+ 		generatorState.allowedOperators = opr;
  		generatorState.allowedOperations = ops;
  	}
 
@@ -76,7 +87,7 @@
 
  		var generatorState.usefulTiles = [];
  		for (var i = 0; i < generatorState.targetUsefulOperations; i++) {
- 			
+
  		}
  	}
 
@@ -85,7 +96,7 @@
  		var genRandomTile = function(generatorState) {
  			return {
  				number: rngRange(generatorState),
- 				operation: generatorState.allowedOperations[int(generatorState.rng() * generatorState.allowedOperations.length - 1)]
+ 				operator: generatorState.allowedOperations[int(generatorState.rng() * generatorState.allowedOperations.length - 1)]
  			};
  		}
 
