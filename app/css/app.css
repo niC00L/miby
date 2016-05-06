@@ -35,11 +35,26 @@ body:after {
 	height: 20vh;
 }
 
+.top-panel h1 {
+    margin: 0;
+}
+
 #game {
-	position: relative;
     text-align: center;    
 }
 
-canvas {
+#miby {
+    height: 80vh;
+}
+
+#miby canvas {
 	border-radius: 10px;
+}
+
+#debug {
+    text-align: left;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 300px;
 }

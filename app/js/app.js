@@ -5,33 +5,6 @@
 
 var colors = {plu: '0x008606', min: '0xff8000', tim: '0xf3f129', div: '0xf32929', none: '0xe1e1e1', player: '0x2eb5b3'};
 
-function generateLevel(level) {
-	var p1 = {number: 5, operator: "min"};
-	var p2 = {number: 6, operator: "plu"};
-	var p3 = {number: 21, operator: "min"};
-	var p4 = {number: 42, operator: "plu"};
-	var p5 = {number: 3, operator: "tim"};
-	var p6 = {number: 2, operator: "div"};
-
-	var level = [
-		[null, null, null, null, null, null, null],
-		[null, p1, null, null, null, p3, null],
-		[null, null, null, null, null, null, null],
-		[null, null, null, null, p2, null, null],
-		[p2, null, null, null, null, null, null],
-		[null, p4, null, null, null, p5, p6],
-		[null, null, null, null, null, null, null],
-	];
-
-	return {
-		level: level,
-		size: 7,
-		previousTarget: 21,
-		target: 42,
-	};
-}
-;
-
 //some necessary stuff
 var pixySetuped = pixySetup();
 
@@ -40,31 +13,62 @@ var stage = pixySetuped[1];
 renderer.backgroundColor = 0xcccccc;
 
 //generated level object
-var generatedLevel = generateLevel(1);
+var generatedLevel;
 
+function loadLevel(level) {
+	for (var i = stage.children.length - 1; i >= 0; i--) {
+		stage.removeChild(stage.children[i]);
+	}
+	generatedLevel = generateLevel(level);
+
+	setupTopPanel();
+	setupSquares();
+	setupPlayer("Linda");
+
+	//debug
+	document.querySelector("#debug pre").innerHTML = JSON.stringify({
+		size: generatedLevel.size,
+		baseRange: generatedLevel.baseRange,
+		previousTarget: generatedLevel.previousTarget,
+		targetOperations: generatedLevel.targetOperations,
+		targetUsefulOperations: generatedLevel.targetUsefulOperations,
+		targetPossibilities: generatedLevel.targetPossibilities,
+		allowedOperations: generatedLevel.allowedOperations,
+		usefulTiles: generatedLevel.usefulTiles,
+		uselessTiles: generatedLevel.uselessTiles
+	}, null, " ");
+}
+
+function setupTopPanel() {
+	document.querySelector("#level").innerHTML = generatedLevel.level;
+	document.querySelector("#target").innerHTML = generatedLevel.target;
+}
+
+loadLevel(1);
 //squares dimensions
 var squareGap = 30;
 var canvasBorder = 30;
 var squareSize = (1000 - (generatedLevel.size * squareGap + canvasBorder)) / generatedLevel.size;
 
 function setupSquares() {
-	var levelArray = generatedLevel.level;
-
 	for (var i = 0; i < generatedLevel.size; i++) {
 		for (var j = 0; j < generatedLevel.size; j++) {
 
 			var x = (squareSize + squareGap) * i + canvasBorder;
 			var y = (squareSize + squareGap) * j + canvasBorder;
 
-			var square = levelArray[i][j];
+			var square = generatedLevel.map[i][j];
+			var number = null;
+
 			if (square) {
-				var op = square.operator;
-				var number = new PIXI.Text(square.number, {font: 'bold 48px Arial', fill: 0xffffff, align: 'center'});
+				op = square.operator;
+				number = new PIXI.Text(square.number, {font: 'bold 48px Arial', fill: 0xffffff, align: 'center'});
+
 				number.x = x + 10;
 				number.y = y + 10;
 			}
 			else {
-				var op = 'none';
+				op = 'none';
 			}
 
 			var graphics = new PIXI.Graphics();
@@ -127,11 +131,9 @@ function setupPlayer(name) {
 		draw();
 	}
 }
-setupSquares();
-setupPlayer("Linda");
 
 var render = function () {
 	renderer.render(stage);
 	requestAnimationFrame(render);
-}
+};
 render();

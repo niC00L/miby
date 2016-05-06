@@ -14,16 +14,16 @@ pixySetup = function() {
 
 	stage = new PIXI.Container();
 
-	resize();
-	
-	document.querySelector("#miby").appendChild(renderer.view);
+	var mibyContainer = document.querySelector("#miby");
+	mibyContainer.appendChild(renderer.view);
 
 	window.addEventListener("resize", resize);
+	resize();
 
 	function resize() {
 
 		ratio = Math.min(window.innerWidth/GAME_WIDTH,
-			window.innerHeight/GAME_HEIGHT);
+			((window.innerHeight * 0.8) - 16)/GAME_HEIGHT);
 
 		stage.scale.x = stage.scale.y = ratio;
 
