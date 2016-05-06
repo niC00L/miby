@@ -1,2 +1,4 @@
-var renderer = PIXI.autoDetectRenderer(400, 300);
-document.querySelector("#miby").appendChild(renderer.view);
+var pixySetuped = pixySetup();
+
+var renderer = pixySetuped[0];
+var stage = pixySetuped[1];

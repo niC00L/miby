@@ -3,13 +3,19 @@
     Author     : niC00L
 */
 
-body {
-	width: 100vw;
-	height: 100vh;
+body, html {
 	margin: 0;
 	padding: 0;
-	background-color: hsla(360, 15%, 55%, 0);
+}
+
+body {	
+	display:flex;
+	width: 100vw;
+	height: 100vh;
+	flex-direction: row;
+    justify-content: center;
 	overflow: hidden;
+	background-color: hsla(360, 15%, 55%, 0);
 }
 
 body:after {
