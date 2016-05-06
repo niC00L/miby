@@ -71,9 +71,12 @@
  	}
 
  	var genUsefulTiles = function(generatorState) {
+ 		var pt = generatorState.previousTarget;
+ 		var t = generatorState.target;
+
  		var generatorState.usefulTiles = [];
  		for (var i = 0; i < generatorState.targetUsefulOperations; i++) {
-
+ 			
  		}
  	}
 
@@ -130,5 +133,5 @@
  	genUselessTiles(generatorState);
  	genLevel(generatorState);
 
- 	return generatorState.level;
+ 	return generatorState;
  }
