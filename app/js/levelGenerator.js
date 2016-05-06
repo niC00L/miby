@@ -62,7 +62,7 @@ function generateLevel(level) {
 	};
 
 	var genTargetPossibilities = function(generatorState) {
-		generatorState.targetPossibilities = Math.max(1, Math.min(10 / generatorState.level, generatorState.targetUsefulOperations));
+		generatorState.targetPossibilities = Math.max(1, Math.min(Math.round(10 / generatorState.level), generatorState.targetUsefulOperations));
 	}
 
 	var genAllowedOperations = function(generatorState) {
@@ -98,6 +98,8 @@ function generateLevel(level) {
 				
 				var splitOn = Math.round(generatorState.rng() * (possibilityUsefulTiles.length - 2));
 				var tiles = splitToOperations(possibilityUsefulTiles[splitOn].number, possibilityUsefulTiles[splitOn + 1].number, generatorState);
+				print(tiles[0]);
+				print(tiles[1]);
 				possibilityUsefulTiles.splice(splitOn+1, 0, tiles[0], tiles[1]);
 
 				j++;
@@ -157,6 +159,7 @@ function generateLevel(level) {
 
 	genBaseRange(generatorState);
 	genSize(generatorState);
+	genPreviousTarget(generatorState);
 	genTarget(generatorState);
 	genTargetOperations(generatorState);
 	genTargetUsefulOperations(generatorState);

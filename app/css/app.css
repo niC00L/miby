@@ -40,7 +40,6 @@ body:after {
 }
 
 #game {
-	position: relative;
     text-align: center;    
 }
 
@@ -50,4 +49,12 @@ body:after {
 
 #miby canvas {
 	border-radius: 10px;
+}
+
+#debug {
+    text-align: left;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 300px;
 }

@@ -24,6 +24,19 @@ function loadLevel(level) {
 	setupTopPanel();
 	setupSquares();
 	setupPlayer("Linda");
+
+	//debug
+	document.querySelector("#debug pre").innerHTML = JSON.stringify({
+		size: generatedLevel.size,
+		baseRange: generatedLevel.baseRange,
+		previousTarget: generatedLevel.previousTarget,
+		targetOperations: generatedLevel.targetOperations,
+		targetUsefulOperations: generatedLevel.targetUsefulOperations,
+		targetPossibilities: generatedLevel.targetPossibilities,
+		allowedOperations: generatedLevel.allowedOperations,
+		usefulTiles: generatedLevel.usefulTiles,
+		uselessTiles: generatedLevel.uselessTiles
+	}, null, " ");
 }
 
 function setupTopPanel() {

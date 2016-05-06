@@ -1,9 +1,11 @@
 var splitToOperations = function(from, to, generatorState) {
 	
+	print("splitToOperations,"+from+","+to);
+
 	var lcm = function(x, y) {
 		if ((typeof x !== 'number') || (typeof y !== 'number')) 
 			return false;
-		return (!x || !y) ? 0 : Math.abs((x * y) / gcd_two_numbers(x, y));
+		return (!x || !y) ? 0 : Math.abs((x * y) / gcd(x, y));
 	};
 
 	var gcd = function(x, y) {
@@ -37,7 +39,7 @@ var splitToOperations = function(from, to, generatorState) {
 			number: n,
 			operator: "plu"
 		},{
-			number: from + n - t,
+			number: from - n + to,
 			operator: "min"
 		}];
 
@@ -56,10 +58,10 @@ var splitToOperations = function(from, to, generatorState) {
 		var ftlcm = lcm(from, to);
 		return [{
 			number: ftlcm / from,
-			operator: "*"
+			operator: "tim"
 		},{
 			number: ftlcm / to,
-			operator: "/"
+			operator: "div"
 		}];
 
 		default:
