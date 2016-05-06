@@ -1,7 +1,3 @@
-var print = function(msg) {
-	console.log(msg); //TODO
-}
-
 function generateLevel(level) {
 
 	var rngRange = function(generatorState) {
@@ -98,8 +94,6 @@ function generateLevel(level) {
 				
 				var splitOn = Math.round(generatorState.rng() * (possibilityUsefulTiles.length - 2));
 				var tiles = splitToOperations(possibilityUsefulTiles[splitOn].number, possibilityUsefulTiles[splitOn + 1].number, generatorState);
-				print(tiles[0]);
-				print(tiles[1]);
 				possibilityUsefulTiles.splice(splitOn+1, 0, tiles[0], tiles[1]);
 
 				j++;

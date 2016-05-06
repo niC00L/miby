@@ -1,7 +1,5 @@
 var splitToOperations = function(from, to, generatorState) {
 	
-	print("splitToOperations,"+from+","+to);
-
 	var lcm = function(x, y) {
 		if ((typeof x !== 'number') || (typeof y !== 'number')) 
 			return false;

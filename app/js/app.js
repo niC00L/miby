@@ -12,14 +12,21 @@ var renderer = pixySetuped[0];
 var stage = pixySetuped[1];
 renderer.backgroundColor = 0xcccccc;
 
+//squares dimensions
+var squareGap = 30;
+var canvasBorder = 30;
+var squareSize = null;
+
 //generated level object
 var generatedLevel;
-
 function loadLevel(level) {
 	for (var i = stage.children.length - 1; i >= 0; i--) {
 		stage.removeChild(stage.children[i]);
 	}
 	generatedLevel = generateLevel(level);
+
+	//squares dimensions
+	squareSize = (1000 - (generatedLevel.size * squareGap + canvasBorder)) / generatedLevel.size;
 
 	setupTopPanel();
 	setupSquares();
@@ -43,12 +50,6 @@ function setupTopPanel() {
 	document.querySelector("#level").innerHTML = generatedLevel.level;
 	document.querySelector("#target").innerHTML = generatedLevel.target;
 }
-
-loadLevel(1);
-//squares dimensions
-var squareGap = 30;
-var canvasBorder = 30;
-var squareSize = (1000 - (generatedLevel.size * squareGap + canvasBorder)) / generatedLevel.size;
 
 function setupSquares() {
 	for (var i = 0; i < generatedLevel.size; i++) {
@@ -131,6 +132,8 @@ function setupPlayer(name) {
 		draw();
 	}
 }
+
+loadLevel(1);
 
 var render = function () {
 	renderer.render(stage);
