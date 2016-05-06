@@ -3,10 +3,19 @@
     Author     : niC00L
 */
 
-body {
+body, html {
 	margin: 0;
 	padding: 0;
-	background-color: hsla(360, 15%, 55%, 0);
 }
 
+body {
+	background-color: hsla(360, 15%, 55%, 0);
 
+	display:flex;
+	flex-direction: row;
+    justify-content: center;
+}
+
+#miby {
+
+}
