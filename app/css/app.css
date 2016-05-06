@@ -4,9 +4,36 @@
 */
 
 body {
+	width: 100vw;
+	height: 100vh;
 	margin: 0;
 	padding: 0;
 	background-color: hsla(360, 15%, 55%, 0);
+	overflow: hidden;
 }
 
+body:after {
+	content: '';
+    position: absolute;
+    top: -42vmin;
+    left: 30vmin;
+    z-index: -1;
+    display: block;
+    width: 80vmin;
+    height: 200vmin;
+    background-color: turquoise;
+    transform: rotate(-45deg);
+}
 
+.top-panel {
+	height: 20vh;
+}
+
+#game {
+	position: relative;
+    text-align: center;    
+}
+
+canvas {
+	border-radius: 10px;
+}
