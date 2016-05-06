@@ -1,6 +1,6 @@
 pixySetup = function() {
-	var GAME_WIDTH = 100;
-	var GAME_HEIGHT = 100;
+	var GAME_WIDTH = 1000;
+	var GAME_HEIGHT = 1000;
 
 	var rendererOptions = {
 		antialiasing: true,
