@@ -17,8 +17,8 @@ var splitToOperations = function(from, to, generatorState) {
 		return x;
 	};
 
-	var operation = generatorState.allowedOperations[Math.round(generatorState.rng() * generatorState.allowedOperations.length - 1)];
-	
+	var operation = generatorState.allowedOperations[Math.round(generatorState.rng() * (generatorState.allowedOperations.length - 1))];
+
 	switch (operation) {
 		
 		case "++":
@@ -63,6 +63,6 @@ var splitToOperations = function(from, to, generatorState) {
 		}];
 
 		default:
-		throw "Illegal operation!";
+		throw "Illegal miby operation "+operation+"!";
 	}
 }

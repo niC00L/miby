@@ -5,33 +5,6 @@ Author     : niC00L, Ienze
 
 var colors = {plu: '0x008606', min: '0xff8000', tim: '0xf3f129', div: '0xf32929', none: '0xe1e1e1'};
 
-function generateLevel(level) {
-	var p1 = {number: 5, operator: "min"};
-	var p2 = {number: 6, operator: "plu"};
-	var p3 = {number: 21, operator: "min"};
-	var p4 = {number: 42, operator: "plu"};
-	var p5 = {number: 3, operator: "tim"};
-	var p6 = {number: 2, operator: "div"};
-
-	var level = [
-	[null, null, null, null, null, null, null],
-	[null, p1, null, null, null, p3, null],
-	[null, null, null, null, null, null, null],
-	[null, null, null, null, p2, null, null],
-	[p2, null, null, null, null, null, null],
-	[null, p4, null, null, null, p5, p6],
-	[null, null, null, null, null, null, null],
-	];
-
-	return {
-		level: level,
-		size: 7,
-		previousTarget: 21,
-		target: 42,
-	};
-}
-;
-
 //some necessary stuff
 var pixySetuped = pixySetup();
 

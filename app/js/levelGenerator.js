@@ -1,3 +1,7 @@
+var print = function(msg) {
+	console.log(msg); //TODO
+}
+
 function generateLevel(level) {
 
 	var rngRange = function(generatorState) {
@@ -51,11 +55,11 @@ function generateLevel(level) {
 	};
 
 	var genTargetOperations = function(generatorState) {
-		generatorState.targetOperations = Math.round(rngRange(generatorState) / 5);
+		generatorState.targetOperations = 1 + Math.round(rngRange(generatorState) / 5);
 	};
 
 	var genTargetUsefulOperations = function(generatorState) {
-		generatorState.targetUsefulOperations = Math.min(Math.round(rngRange(generatorState) / 5), generatorState.targetOperations);
+		generatorState.targetUsefulOperations = Math.max(Math.round(rngRange(generatorState) / 5), generatorState.targetOperations);
 	};
 
 	var genTargetPossibilities = function(generatorState) {
@@ -93,14 +97,14 @@ function generateLevel(level) {
 
 			while(generatorState.usefulTiles.length < generatorState.targetUsefulOperations && j <= perPossibility) {
 				
-				var splitOn = generatorState.rng() * (possibilityUsefulTiles.length - 2);
-				var tile = splitToOperations(possibilityUsefulTiles[splitOn].number, possibilityUsefulTiles[splitOn + 1].number, generatorState);
-				possibilityUsefulTiles.splice(splitOn+1, 0, tile);
+				var splitOn = Math.round(generatorState.rng() * (possibilityUsefulTiles.length - 2));
+				var tiles = splitToOperations(possibilityUsefulTiles[splitOn].number, possibilityUsefulTiles[splitOn + 1].number, generatorState);
+				possibilityUsefulTiles.splice(splitOn+1, 0, tiles[0], tiles[1]);
 
 				j++;
 			}
 
-			for(i = 1; i < possibilityUsefulTiles.length; i++) {
+			for(i = 1; i < possibilityUsefulTiles.length - 1; i++) {
 				generatorState.usefulTiles.push(possibilityUsefulTiles[i]);
 			}
 		}
@@ -166,13 +170,14 @@ function generateLevel(level) {
 	return generatorState;
 }
 
+/* TODO
 function printLevel(state) {
 	for(y = 0; y < state.size; y++) {
 		var line = " ";
 		for(x = 0; x < state.size; x++) {
 			if(state.level[y][x]) {
 				console.log(state.level[y][x]);
-				line = line + state.level[y][x].operator+state.level[y][x].number + " ";
+				line = line + state.level[y][x].operator.charAt(0)+state.level[y][x].number + " ";
 			} else {
 				line = line + "n0 ";
 			}
@@ -180,3 +185,4 @@ function printLevel(state) {
 		console.log(line);
 	}
 }
+*/
