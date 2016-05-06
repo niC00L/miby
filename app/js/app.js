@@ -48,9 +48,9 @@ var levelArray = generatedLevel.level;
 //var squareEmptyImg = PIXI.Rectangle;
 
 //squares dimensions
-var squareSize = 110;
-var squareGap = 25;
-var canvasBorder = 40;
+var squareGap = 30;
+var canvasBorder = 30;
+var squareSize = (1000-(generatedLevel.size*squareGap+canvasBorder))/generatedLevel.size;
 
 for (var i = 0; i < generatedLevel.size; i++) {
 	for (var j = 0; j < generatedLevel.size; j++) {
