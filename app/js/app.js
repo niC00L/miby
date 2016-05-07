@@ -94,42 +94,65 @@ function setupPlayer(name) {
 		value: 0
 	}
 	var playerBox = new PIXI.Graphics();
-	function draw() {
-		var x = (squareSize + squareGap) * playerSettings.x + canvasBorder;
-		var y = (squareSize + squareGap) * playerSettings.y + canvasBorder;
+	var x = (squareSize + squareGap) * playerSettings.x + canvasBorder;
+	var y = (squareSize + squareGap) * playerSettings.y + canvasBorder;
 
-		var number = new PIXI.Text(playerSettings.value, {font: 'bold 48px Arial', fill: 0xffffff, align: 'center'});
-		number.x = x + 10;
-		number.y = y + 10;
+	var number = new PIXI.Text(playerSettings.value, {font: 'bold 48px Arial', fill: 0xffffff, align: 'center'});
+	number.x = x + 10;
+	number.y = y + 10;
 
-		console.log(stage.children);
-		stage.removeChild(9);
+	console.log(stage.children);
+	stage.removeChild(9);
 
-		playerBox.beginFill(colors.player);
-		playerBox.drawRoundedRect(x, y, squareSize, squareSize, 10);
-		playerBox.endFill();
+	playerBox.beginFill(colors.player);
+	playerBox.drawRoundedRect(x, y, squareSize, squareSize, 10);
+	playerBox.endFill();
 
-		stage.addChild(playerBox);
-		stage.addChild(number);
-	}
+	stage.addChild(playerBox);
+	stage.addChild(number);
 
 	document.addEventListener('keydown', keyPressed);
-	draw();
 	function keyPressed(key) {
 		pressed = key.keyCode;
 		if (pressed == 38) { //up
-			playerSettings.y -= 1 % generatedLevel.size;
+			playerBox.position.y -= 1 * squareSize + squareGap;
+			number.y -= 1 * squareSize + squareGap;
+			playerSettings.y -= 1;
 		}
 		if (pressed == 40) { //down
-			playerSettings.y += 1 % generatedLevel.size;
+			playerBox.position.y += 1 * squareSize + squareGap;
+			number.y += 1 * squareSize + squareGap;
+			playerSettings.y += 1;
 		}
 		if (pressed == 37) { //left
-			playerSettings.x -= 1 % generatedLevel.size;
+			playerBox.position.x -= 1 * squareSize + squareGap;
+			number.x -= 1 * squareSize + squareGap;
+			playerSettings.x -= 1;
 		}
 		if (pressed == 39) { //right
-			playerSettings.x += 1 % generatedLevel.size;
+			playerBox.position.x += 1 * squareSize + squareGap;
+			number.x += 1 * squareSize + squareGap;
+			playerSettings.x += 1;
 		}
-		draw();
+		playerValue()
+	}
+
+	function playerValue() {
+		var squareValue = generatedLevel.map[playerSettings.x][playerSettings.y];
+		if (squareValue) {
+			playerSettings.value += squareValue.number;
+			number.value = playerSettings.value;
+			generatedLevel.map[playerSettings.x][playerSettings.y] = null;
+			
+			console.log(playerSettings.value);
+			
+			var empty = new PIXI.Graphics();
+			empty.beginFill(colors.none);
+			empty.drawRoundedRect(playerSettings.x * (squareSize + squareGap)+canvasBorder, playerSettings.y * (squareSize + squareGap)+canvasBorder, squareSize, squareSize, 10);
+			empty.endFill();
+			
+			stage.addChild(empty);
+		}
 	}
 }
 
