@@ -140,8 +140,8 @@ function setupPlayer(name) {
 	function playerValue() {
 		var squareValue = generatedLevel.map[playerSettings.x][playerSettings.y];
 		if (squareValue) {
-			playerSettings.value += squareValue.number;
-			number.value = playerSettings.value;
+			playerSettings.value = applyOperation(squareValue, playerSettings.value);
+			number.text = playerSettings.value;
 			generatedLevel.map[playerSettings.x][playerSettings.y] = null;
 			
 			console.log(playerSettings.value);
