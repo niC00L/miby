@@ -101,9 +101,6 @@ function setupPlayer(name) {
 	number.x = x + 10;
 	number.y = y + 10;
 
-	console.log(stage.children);
-	stage.removeChild(9);
-
 	playerBox.beginFill(colors.player);
 	playerBox.drawRoundedRect(x, y, squareSize, squareSize, 10);
 	playerBox.endFill();
@@ -144,12 +141,16 @@ function setupPlayer(name) {
 			number.text = playerSettings.value;
 			generatedLevel.map[playerSettings.x][playerSettings.y] = null;
 			
+			if(playerSettings.value == generatedLevel.target) {
+				loadLevel(generatedLevel.level+1);
+			}
+			
 			var empty = new PIXI.Graphics();
 			empty.beginFill(colors.none);
 			empty.drawRoundedRect(playerSettings.x * (squareSize + squareGap)+canvasBorder, playerSettings.y * (squareSize + squareGap)+canvasBorder, squareSize, squareSize, 10);
 			empty.endFill();
 			
-			stage.addChild(empty);
+			stage.addChildAt(empty, stage.getChildIndex(playerBox)-1);
 		}
 	}
 }
