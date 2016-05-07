@@ -91,7 +91,7 @@ function setupPlayer(name) {
 		name: name,
 		x: 0,
 		y: 0,
-		value: 0
+		value: generatedLevel.previousTarget
 	}
 	var playerBox = new PIXI.Graphics();
 	var x = (squareSize + squareGap) * playerSettings.x + canvasBorder;
