@@ -24,21 +24,21 @@ var splitToOperations = function(from, to, generatorState) {
 		case "++":
 		var n1 = Math.round(generatorState.rng() * (to - from));
 		return [{
-			number: n1,
-			operator: "plu"
+			number: Math.abs(n1),
+			operator: n1 >= 0 ? "plu" : "min"
 		},{
-			number: to - from - n1,
-			operator: "plu"
+			number: Math.abs(to - from - n1),
+			operator: (to - from - n1) >= 0 ? "plu" : "min"
 		}];
 
 		case "+-":
 		var n2 = Math.round(generatorState.rng() * (Math.abs(from) + Math.abs(to)));
 		return [{
-			number: n2,
-			operator: "plu"
+			number: Math.abs(n2),
+			operator: n2 >= 0 ? "plu" : "min"
 		},{
-			number: from - n2 + to,
-			operator: "min"
+			number: Math.abs(from - n2 + to),
+			operator: (from - n2 + to) >= 0 ? "plu" : "min"
 		}];
 
 		/*

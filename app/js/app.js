@@ -3,14 +3,10 @@
  Author     : niC00L, Ienze
  */
 
-var colors = {plu: '0x008606', min: '0xff8000', tim: '0xf3f129', div: '0xf32929', none: '0xe1e1e1', player: '0x2eb5b3'};
+ var colors = {plu: '0x008606', min: '0xff8000', tim: '0xf3f129', div: '0xf32929', none: '0xe1e1e1', player: '0x2eb5b3'};
 
 //some necessary stuff
-var pixySetuped = pixySetup();
-
-var renderer = pixySetuped[0];
-var stage = pixySetuped[1];
-renderer.backgroundColor = 0xcccccc;
+var renderer = pixySetup();
 
 //squares dimensions
 var squareGap = 30;
@@ -19,10 +15,10 @@ var squareSize = null;
 
 //generated level object
 var generatedLevel;
+
 function loadLevel(level) {
-	for (var i = stage.children.length - 1; i >= 0; i--) {
-		stage.removeChild(stage.children[i]);
-	}
+	newStage();
+
 	generatedLevel = generateLevel(level);
 
 	//squares dimensions
@@ -31,19 +27,6 @@ function loadLevel(level) {
 	setupTopPanel();
 	setupSquares();
 	setupPlayer("Linda");
-
-	//debug
-	document.querySelector("#debug pre").innerHTML = JSON.stringify({
-		size: generatedLevel.size,
-		baseRange: generatedLevel.baseRange,
-		previousTarget: generatedLevel.previousTarget,
-		targetOperations: generatedLevel.targetOperations,
-		targetUsefulOperations: generatedLevel.targetUsefulOperations,
-		targetPossibilities: generatedLevel.targetPossibilities,
-		allowedOperations: generatedLevel.allowedOperations,
-		usefulTiles: generatedLevel.usefulTiles,
-		uselessTiles: generatedLevel.uselessTiles
-	}, null, " ");
 }
 
 function setupTopPanel() {
@@ -52,11 +35,14 @@ function setupTopPanel() {
 }
 
 function setupSquares() {
+	stage.squareContainers = [];
 	for (var i = 0; i < generatedLevel.size; i++) {
+		stage.squareContainers[i] = [];
 		for (var j = 0; j < generatedLevel.size; j++) {
 
-			var x = (squareSize + squareGap) * i + canvasBorder;
-			var y = (squareSize + squareGap) * j + canvasBorder;
+			var squareContainer = new PIXI.Container();
+			squareContainer.x = (squareSize + squareGap) * i + canvasBorder;
+			squareContainer.y = (squareSize + squareGap) * j + canvasBorder;
 
 			var square = generatedLevel.map[i][j];
 			var number = null;
@@ -64,9 +50,8 @@ function setupSquares() {
 			if (square) {
 				op = square.operator;
 				number = new PIXI.Text(square.number, {font: 'bold 48px Arial', fill: 0xffffff, align: 'center'});
-
-				number.x = x + 10;
-				number.y = y + 10;
+				number.x = 20;
+				number.y = 20;
 			}
 			else {
 				op = 'none';
@@ -75,85 +60,102 @@ function setupSquares() {
 			var graphics = new PIXI.Graphics();
 
 			graphics.beginFill(colors[op]);
-			graphics.drawRoundedRect(x, y, squareSize, squareSize, 10);
+			graphics.drawRoundedRect(0, 0, squareSize, squareSize, 10);
 			graphics.endFill();
 
-			stage.addChild(graphics);
+			squareContainer.addChild(graphics);
+			squareContainer.graphics = graphics;
 			if (square) {
-				stage.addChild(number);
+				squareContainer.addChild(number);
+				squareContainer.number = number;
 			}
+
+			stage.addChild(squareContainer);
+			stage.squareContainers[i][j] = squareContainer;
 		}
 	}
 }
+
+var playerSettings = {
+	name: name,
+	x: 0,
+	y: 0,
+	value: null
+};
 
 function setupPlayer(name) {
-	var playerSettings = {
-		name: name,
-		x: 0,
-		y: 0,
-		value: generatedLevel.previousTarget
+	
+	playerSettings.value = generatedLevel.previousTarget;
+
+	var playerContainer = new PIXI.Container();
+	playerContainer.moved = function() {
+		this.x = (squareSize + squareGap) * playerSettings.x + canvasBorder;
+		this.y = (squareSize + squareGap) * playerSettings.y + canvasBorder;
 	}
+	playerContainer.moved();
+
 	var playerBox = new PIXI.Graphics();
-	var x = (squareSize + squareGap) * playerSettings.x + canvasBorder;
-	var y = (squareSize + squareGap) * playerSettings.y + canvasBorder;
 
 	var number = new PIXI.Text(playerSettings.value, {font: 'bold 48px Arial', fill: 0xffffff, align: 'center'});
-	number.x = x + 10;
-	number.y = y + 10;
+	number.x = 20;
+	number.y = 20;
 
 	playerBox.beginFill(colors.player);
-	playerBox.drawRoundedRect(x, y, squareSize, squareSize, 10);
+	playerBox.drawRoundedRect(0, 0, squareSize, squareSize, 10);
 	playerBox.endFill();
 
-	stage.addChild(playerBox);
-	stage.addChild(number);
+	playerContainer.addChild(playerBox);
+	playerContainer.playerBox = playerBox;
+	playerContainer.addChild(number);
+	playerContainer.number = number;
 
-	document.addEventListener('keydown', keyPressed);
-	function keyPressed(key) {
-		pressed = key.keyCode;
-		if (pressed == 38) { //up
-			playerBox.position.y -= 1 * squareSize + squareGap;
-			number.y -= 1 * squareSize + squareGap;
-			playerSettings.y -= 1;
-		}
-		if (pressed == 40) { //down
-			playerBox.position.y += 1 * squareSize + squareGap;
-			number.y += 1 * squareSize + squareGap;
-			playerSettings.y += 1;
-		}
-		if (pressed == 37) { //left
-			playerBox.position.x -= 1 * squareSize + squareGap;
-			number.x -= 1 * squareSize + squareGap;
-			playerSettings.x -= 1;
-		}
-		if (pressed == 39) { //right
-			playerBox.position.x += 1 * squareSize + squareGap;
-			number.x += 1 * squareSize + squareGap;
-			playerSettings.x += 1;
-		}
-		playerValue()
+	stage.addChild(playerContainer);
+	stage.playerContainer = playerContainer;
+}
+
+document.addEventListener('keydown', keyPressed);
+function keyPressed(key) {
+	pressed = key.keyCode;
+	if (pressed == 38) { //up
+		playerSettings.y -= 1;
+	}
+	if (pressed == 40) { //down
+		playerSettings.y += 1;
+	}
+	if (pressed == 37) { //left
+		playerSettings.x -= 1;
+	}
+	if (pressed == 39) { //right
+		playerSettings.x += 1;
 	}
 
-	function playerValue() {
-		var squareValue = generatedLevel.map[playerSettings.x][playerSettings.y];
-		if (squareValue) {
-			playerSettings.value = applyOperation(squareValue, playerSettings.value);
-			number.text = playerSettings.value;
-			generatedLevel.map[playerSettings.x][playerSettings.y] = null;
-			
-			if(playerSettings.value == generatedLevel.target) {
-				loadLevel(generatedLevel.level+1);
-			}
-			
-			var empty = new PIXI.Graphics();
-			empty.beginFill(colors.none);
-			empty.drawRoundedRect(playerSettings.x * (squareSize + squareGap)+canvasBorder, playerSettings.y * (squareSize + squareGap)+canvasBorder, squareSize, squareSize, 10);
-			empty.endFill();
-			
-			stage.addChildAt(empty, stage.getChildIndex(playerBox)-1);
+	stage.playerContainer.moved();
+
+	playerValue();
+}
+
+function playerValue() {
+	var squareValue = generatedLevel.map[playerSettings.x][playerSettings.y];
+	if (squareValue) {
+		playerSettings.value = applyOperation(squareValue, playerSettings.value);
+		stage.playerContainer.number.text = playerSettings.value;
+		generatedLevel.map[playerSettings.x][playerSettings.y] = null;
+		
+		//edit square
+		var squareContainer = stage.squareContainers[playerSettings.x][playerSettings.y];
+		squareContainer.graphics.clear();
+		squareContainer.graphics.beginFill(colors.none);
+		squareContainer.graphics.drawRoundedRect(0, 0, squareSize, squareSize, 10);
+		squareContainer.graphics.endFill();
+		squareContainer.removeChild(squareContainer.number);
+		
+		//proceed to next level
+		if(playerSettings.value == generatedLevel.target) {
+			loadLevel(generatedLevel.level+1);
 		}
 	}
 }
+
 
 loadLevel(1);
 

@@ -64,16 +64,16 @@ function generateLevel(level) {
 	var genAllowedOperations = function(generatorState) {
 		var opr = null;
 		var ops = null;
-		if(generatorState.level <= 2) {
+		// if(generatorState.level <= 2) {
 			opr = ["plu"];
 			ops = ["++"];
-		} else if(generatorState.level <= 7) {
-			opr = ["plu", "min"];
-			ops = ["++", "+-"];
-		} else {
-			opr = ["plu", "min", "tim", "div"];
-			ops = ["++", "+-", "*/"];
-		}
+		// } else if(generatorState.level <= 7) {
+		// 	opr = ["plu", "min"];
+		// 	ops = ["++", "+-"];
+		// } else {
+		// 	opr = ["plu", "min", "tim", "div"];
+		// 	ops = ["++", "+-", "*/"];
+		// }
 		generatorState.allowedOperators = opr;
 		generatorState.allowedOperations = ops;
 	};
@@ -104,12 +104,12 @@ function generateLevel(level) {
 					to_n = possibilityUsefulTiles[splitOn+1].number;
 				}
 
-				console.log(JSON.stringify(possibilityUsefulTiles));
-				console.log({splitOn: splitOn, from_n: from_n, to_n: to_n});
 				var tiles = splitToOperations(from_n, to_n, generatorState);
-				console.log(tiles);
-
-				possibilityUsefulTiles.splice(splitOn+1, 0, tiles[0], tiles[1]);
+				
+				while(tiles.length > 0) {
+					splitOn++;
+					possibilityUsefulTiles.splice(splitOn, 0, tiles.pop());
+				}
 
 				j++;
 			}
