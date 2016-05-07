@@ -3,7 +3,7 @@
  Author     : niC00L, Ienze
  */
 
- var colors = {plu: '0x008606', min: '0xff8000', tim: '0xf3f129', div: '0xf32929', none: '0xe1e1e1', player: '0x2eb5b3'};
+var colors = {plu: '0x008606', min: '0xff8000', tim: '0xf3f129', div: '0xf32929', none: '0xe1e1e1', player: '0x2eb5b3'};
 
 //some necessary stuff
 var renderer = pixySetup();
@@ -84,11 +84,11 @@ var playerSettings = {
 };
 
 function setupPlayer(name) {
-	
+
 	playerSettings.value = generatedLevel.previousTarget;
 
 	var playerContainer = new PIXI.Container();
-	playerContainer.moved = function() {
+	playerContainer.moved = function () {
 		this.x = (squareSize + squareGap) * playerSettings.x + canvasBorder;
 		this.y = (squareSize + squareGap) * playerSettings.y + canvasBorder;
 	}
@@ -116,17 +116,33 @@ function setupPlayer(name) {
 document.addEventListener('keydown', keyPressed);
 function keyPressed(key) {
 	pressed = key.keyCode;
-	if (pressed == 38) { //up
+	if (pressed == 38) { //up		
+		if (playerSettings.y == 0) {
+			playerSettings.y = generatedLevel.size;
+		}
 		playerSettings.y -= 1;
+
 	}
-	if (pressed == 40) { //down
-		playerSettings.y += 1;
+	if (pressed == 40) { //down		
+		if (playerSettings.y == generatedLevel.size - 1) {
+			playerSettings.y = 0;
+		} else {
+			playerSettings.y += 1;
+		}
 	}
-	if (pressed == 37) { //left
+	if (pressed == 37) { //left		
+		if (playerSettings.x == 0) {
+			playerSettings.x = generatedLevel.size;
+		}
 		playerSettings.x -= 1;
+
 	}
-	if (pressed == 39) { //right
-		playerSettings.x += 1;
+	if (pressed == 39) { //right		
+		if (playerSettings.x == generatedLevel.size - 1) {
+			playerSettings.x = 0;
+		} else {
+			playerSettings.x += 1;
+		}
 	}
 
 	stage.playerContainer.moved();
@@ -140,7 +156,7 @@ function playerValue() {
 		playerSettings.value = applyOperation(squareValue, playerSettings.value);
 		stage.playerContainer.number.text = playerSettings.value;
 		generatedLevel.map[playerSettings.x][playerSettings.y] = null;
-		
+
 		//edit square
 		var squareContainer = stage.squareContainers[playerSettings.x][playerSettings.y];
 		squareContainer.graphics.clear();
@@ -148,14 +164,13 @@ function playerValue() {
 		squareContainer.graphics.drawRoundedRect(0, 0, squareSize, squareSize, 10);
 		squareContainer.graphics.endFill();
 		squareContainer.removeChild(squareContainer.number);
-		
+
 		//proceed to next level
-		if(playerSettings.value == generatedLevel.target) {
-			loadLevel(generatedLevel.level+1);
+		if (playerSettings.value == generatedLevel.target) {
+			loadLevel(generatedLevel.level + 1);
 		}
 	}
 }
-
 
 loadLevel(1);
 
