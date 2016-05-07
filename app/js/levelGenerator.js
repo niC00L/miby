@@ -64,16 +64,16 @@ function generateLevel(level) {
 	var genAllowedOperations = function(generatorState) {
 		var opr = null;
 		var ops = null;
-		// if(generatorState.level <= 2) {
+		 if(generatorState.level <= 2) {
 			opr = ["plu"];
 			ops = ["++"];
-		// } else if(generatorState.level <= 7) {
-		// 	opr = ["plu", "min"];
-		// 	ops = ["++", "+-"];
+		 } else{// if(generatorState.level <= 7) {
+		 	opr = ["plu", "min"];
+		 	ops = ["++", "+-"];
 		// } else {
 		// 	opr = ["plu", "min", "tim", "div"];
 		// 	ops = ["++", "+-", "*/"];
-		// }
+		 }
 		generatorState.allowedOperators = opr;
 		generatorState.allowedOperations = ops;
 	};

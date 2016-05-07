@@ -32,13 +32,13 @@ var splitToOperations = function(from, to, generatorState) {
 		}];
 
 		case "+-":
-		var n2 = Math.round(generatorState.rng() * (Math.abs(from) + Math.abs(to)));
+		var n2 = Math.round(generatorState.rng() * ((Math.abs(from) + Math.abs(to)) * 1.4));
 		return [{
-			number: Math.abs(n2),
-			operator: n2 >= 0 ? "plu" : "min"
+			number: Math.abs(n2 - from),
+			operator: (n2 - from) >= 0 ? "plu" : "min"
 		},{
-			number: Math.abs(from - n2 + to),
-			operator: (from - n2 + to) >= 0 ? "plu" : "min"
+			number: Math.abs(n2 - to),
+			operator: (n2 - to) < 0 ? "plu" : "min"
 		}];
 
 		/*
