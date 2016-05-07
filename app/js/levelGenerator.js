@@ -94,12 +94,20 @@ function generateLevel(level) {
 				
 				var splitOn = Math.round(generatorState.rng() * (possibilityUsefulTiles.length - 2));
 				var from_n = possibilityUsefulTiles[0].number;
+				var to_n = null;
 				for(j = 1; j <= splitOn; j++) {
 					from_n = applyOperation(possibilityUsefulTiles[j], from_n);
 				}
-				var to_n = applyOperation(possibilityUsefulTiles[splitOn+1], from_n);
+				if(possibilityUsefulTiles[splitOn+1].operator) {
+					to_n = applyOperation(possibilityUsefulTiles[splitOn+1], from_n);
+				} else {
+					to_n = possibilityUsefulTiles[splitOn+1].number;
+				}
 
+				console.log(JSON.stringify(possibilityUsefulTiles));
+				console.log({splitOn: splitOn, from_n: from_n, to_n: to_n});
 				var tiles = splitToOperations(from_n, to_n, generatorState);
+				console.log(tiles);
 
 				possibilityUsefulTiles.splice(splitOn+1, 0, tiles[0], tiles[1]);
 
@@ -117,7 +125,7 @@ function generateLevel(level) {
 		var genRandomTile = function(generatorState) {
 			return {
 				number: rngRange(generatorState),
-				operator: generatorState.allowedOperators[Math.round(generatorState.rng() * generatorState.allowedOperators.length - 1)]
+				operator: generatorState.allowedOperators[Math.round(generatorState.rng() * (generatorState.allowedOperators.length - 1))]
 			};
 		};
 

@@ -144,8 +144,6 @@ function setupPlayer(name) {
 			number.text = playerSettings.value;
 			generatedLevel.map[playerSettings.x][playerSettings.y] = null;
 			
-			console.log(playerSettings.value);
-			
 			var empty = new PIXI.Graphics();
 			empty.beginFill(colors.none);
 			empty.drawRoundedRect(playerSettings.x * (squareSize + squareGap)+canvasBorder, playerSettings.y * (squareSize + squareGap)+canvasBorder, squareSize, squareSize, 10);
