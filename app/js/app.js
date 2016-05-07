@@ -137,9 +137,13 @@ function setupPlayer(name) {
 	function playerValue() {
 		var squareValue = generatedLevel.map[playerSettings.x][playerSettings.y];
 		if (squareValue) {
-			playerSettings.value += squareValue.number;
+			playerSettings.value = applyOperation(squareValue, playerSettings.value);
 			number.text = playerSettings.value;
 			generatedLevel.map[playerSettings.x][playerSettings.y] = null;
+			
+			if(playerSettings.value == generatedLevel.target) {
+				loadLevel(generatedLevel.level+1);
+			}
 			
 			var empty = new PIXI.Graphics();
 			empty.beginFill(colors.none);

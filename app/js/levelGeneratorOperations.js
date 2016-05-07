@@ -22,22 +22,22 @@ var splitToOperations = function(from, to, generatorState) {
 	switch (operation) {
 		
 		case "++":
-		var n = Math.round(generatorState.rng() * (to - from));
+		var n1 = Math.round(generatorState.rng() * (to - from));
 		return [{
-			number: n,
+			number: n1,
 			operator: "plu"
 		},{
-			number: to - from - n,
+			number: to - from - n1,
 			operator: "plu"
 		}];
 
 		case "+-":
-		var n = Math.round(generatorState.rng() * (Math.abs(from) + Math.abs(to)));
+		var n2 = Math.round(generatorState.rng() * (Math.abs(from) + Math.abs(to)));
 		return [{
-			number: n,
+			number: n2,
 			operator: "plu"
 		},{
-			number: from - n + to,
+			number: from - n2 + to,
 			operator: "min"
 		}];
 
@@ -64,5 +64,18 @@ var splitToOperations = function(from, to, generatorState) {
 
 		default:
 		throw "Illegal miby operation "+operation+"!";
+	}
+};
+
+var applyOperation = function(operation, value) {
+	switch(operation.operator) {
+		case "plu":
+		return value + operation.number;
+		case "min":
+		return value - operation.number;
+		case "tim":
+		return value * operation.number;
+		case "div":
+		return Math.round(value / operation.number);
 	}
 }
