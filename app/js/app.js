@@ -113,17 +113,46 @@ function setupPlayer(name) {
 	stage.playerContainer = playerContainer;
 }
 
+document.addEventListener("touchmove", function (event) {
+	event.preventDefault();
+}, false);
+
+var swipe = new Hammer(document.querySelector("#miby"), {preventDefault: true});
+swipe.get('swipe').set({direction: Hammer.DIRECTION_ALL});
+
+swipe.on('dragleft swipeleft', function (ev) {
+	keyPressed({keyCode: 37});
+});
+swipe.on('dragright swiperight', function (ev) {
+	keyPressed({keyCode: 39});
+});
+swipe.on('dragup swipeup', function (ev) {
+	keyPressed({keyCode: 38});
+});
+swipe.on('dragdown swipedown', function (ev) {
+	keyPressed({keyCode: 40});
+});
+
 document.addEventListener('keydown', keyPressed);
-function keyPressed(key) {
+function keyPressed(key, a) {
+//	preventDefault(key);
 	pressed = key.keyCode;
-	if (pressed == 38) { //up		
+	if (pressed == 38) { //up
+		//kedze pri touch evente nedostava cely objekt key, tak by to hadzalo chybu
+		//preto je tu podmienka na disable len ked je stlacene tlacidlo
+		if (a) {
+			key.preventDefault();
+		}
 		if (playerSettings.y == 0) {
 			playerSettings.y = generatedLevel.size;
 		}
 		playerSettings.y -= 1;
 
 	}
-	if (pressed == 40) { //down		
+	if (pressed == 40) { //down	
+		if (a) {
+			key.preventDefault();
+		}
 		if (playerSettings.y == generatedLevel.size - 1) {
 			playerSettings.y = 0;
 		} else {
@@ -131,6 +160,9 @@ function keyPressed(key) {
 		}
 	}
 	if (pressed == 37) { //left		
+		if (a) {
+			key.preventDefault();
+		}
 		if (playerSettings.x == 0) {
 			playerSettings.x = generatedLevel.size;
 		}
@@ -138,6 +170,9 @@ function keyPressed(key) {
 
 	}
 	if (pressed == 39) { //right		
+		if (a) {
+			key.preventDefault();
+		}
 		if (playerSettings.x == generatedLevel.size - 1) {
 			playerSettings.x = 0;
 		} else {
