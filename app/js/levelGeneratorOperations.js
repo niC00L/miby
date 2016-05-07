@@ -3,7 +3,7 @@ var splitToOperations = function(from, to, generatorState) {
 	var lcm = function(x, y) {
 		if ((typeof x !== 'number') || (typeof y !== 'number')) 
 			return false;
-		return (!x || !y) ? 0 : Math.abs((x * y) / gcd(x, y));
+		return Math.abs((x * y) / gcd(x, y));
 	};
 
 	var gcd = function(x, y) {
@@ -55,10 +55,10 @@ var splitToOperations = function(from, to, generatorState) {
 		case "*/":
 		var ftlcm = lcm(from, to);
 		return [{
-			number: ftlcm / from,
+			number: ftlcm / from || 0,
 			operator: "tim"
 		},{
-			number: ftlcm / to,
+			number: ftlcm / to || 0,
 			operator: "div"
 		}];
 
