@@ -145,6 +145,7 @@ function generateLevel(seed, level) {
 
 	var genMap = function(generatorState) {
 		var tiles = generatorState.usefulTiles.concat(generatorState.uselessTiles);
+		
 		var x, y;
 
 		var map = new Array(generatorState.size);
@@ -157,13 +158,12 @@ function generateLevel(seed, level) {
 
 		while(tiles.length > 0) {
 			var tile = tiles.pop();
-
+			
 			x = Math.round(generatorState.rng() * (generatorState.size - 1));
 			y = Math.round(generatorState.rng() * (generatorState.size - 1));
 
 			if(map[y][x]) {
-				tiles.push(map[x][y]);
-				map[y][x] = null;
+				tiles.push(map[y][x]);
 			}
 
 			map[y][x] = tile;

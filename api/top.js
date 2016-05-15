@@ -3,7 +3,7 @@ var router = express.Router();
 var data = require('../bin/data');
 var debug = require('debug')('miby-server:server');
 
-router.post('/', function(req, res, next) {
+router.get('/', function(req, res, next) {
 	
 	data.search({
 		"index": 'miby',
