@@ -35,6 +35,7 @@ function loadLevel(level) {
 	setupTopPanel();
 	setupSquares();
 	setupPlayer();
+	startLevel();
 }
 
 function changeSeed(seed) {
@@ -208,9 +209,47 @@ function playerValue() {
 
 		//proceed to next level
 		if (playerSettings.value == generatedLevel.target) {
-			loadLevel(generatedLevel.level + 1);
+			nextLevel();
 		}
 	}
+}
+
+function nextLevel() {
+	endLevel();
+	loadLevel(generatedLevel.level + 1);
+}
+
+var submitTimer = null;
+var submitStart = null;
+var submitMoves = null;
+function startLevel() {
+	submitTimer = Date.now();
+	submitStart = {
+		x: playerSettings.x,
+		y: playerSettings.y
+	};
+	submitMoves = [];
+}
+
+function endLevel() {
+	var time = Date.now() - submitTimer;
+
+	try {
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.open("POST", "/api/level");
+		xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+		xmlhttp.send(JSON.stringify({
+			"success": true,
+			"name": playerSettings.name,
+			"seed": playerSettings.seed,
+			"generator": 1,
+			"level": generatedLevel.level,
+			"value": playerSettings.value,
+			"time": time,
+			"start": submitStart,
+			"moves": submitMoves
+		}));
+	} catch (e) { }
 }
 
 loadLevel(1);
