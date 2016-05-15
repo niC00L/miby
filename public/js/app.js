@@ -233,10 +233,10 @@ function startLevel() {
 
 function endLevel() {
 	var time = Date.now() - submitTimer;
-
+	var serverAddress = 'http://ienze.me/miby';
 	try {
 		var xmlhttp = new XMLHttpRequest();
-		xmlhttp.open("POST", "/api/level");
+		xmlhttp.open("POST", serverAddress+"/api/level");
 		xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 		xmlhttp.send(JSON.stringify({
 			"success": true,
