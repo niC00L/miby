@@ -78,4 +78,4 @@ var applyOperation = function(operation, value) {
 		case "div":
 		return Math.round(value / operation.number);
 	}
-}
+};

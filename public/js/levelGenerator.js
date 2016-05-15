@@ -1,11 +1,11 @@
-function generateLevel(level) {
+function generateLevel(seed, level) {
 
 	var rngRange = function(generatorState) {
 		return Math.round( generatorState.baseRange.from + (generatorState.rng() * (generatorState.baseRange.to - generatorState.baseRange.from)) );
 	};
 
 	var getGeneratorState = function(level) {
-		var rng = new xor4096("miby"+level);
+		var rng = new xor4096(seed+level);
 		return {
 			rng: rng,
 			level: level,
@@ -28,7 +28,7 @@ function generateLevel(level) {
 	};
 
 	var genBaseRange = function(generatorState) {
-		generatorState.baseRange.from = 0;
+		generatorState.baseRange.from = -1 * ((generatorState.level * generatorState.level) / 4 + (generatorState.level / 2 ) + 10);
 		generatorState.baseRange.to = (generatorState.level * generatorState.level) / 4 + (generatorState.level / 2 ) + 10;
 	};
 
@@ -50,7 +50,7 @@ function generateLevel(level) {
 	};
 
 	var genTargetOperations = function(generatorState) {
-		generatorState.targetOperations = 1 + Math.round(rngRange(generatorState) / 5);
+		generatorState.targetOperations = Math.max(1, Math.min(generatorState.size * generatorState.size, Math.round(rngRange(generatorState) / 8)));
 	};
 
 	var genTargetUsefulOperations = function(generatorState) {
@@ -66,13 +66,16 @@ function generateLevel(level) {
 		var ops = null;
 		if(generatorState.level <= 2) {
 			opr = ["plu"];
-			ops = ["++"];
-		} else if(generatorState.level <= 7) {
+			ops = ["+"];
+		} else if(generatorState.level <= 15) {
 			opr = ["plu", "min"];
-			ops = ["++", "+-"];
+			ops = ["+", "-"];
+		} else if(generatorState.level <= 20) {
+			opr = ["plu", "min"];
+			ops = ["+", "-", "*"];
 		} else {
 			opr = ["plu", "min", "tim", "div"];
-			ops = ["++", "+-", "*/"];
+			ops = ["+", "-", "*", "/"];
 		}
 		generatorState.allowedOperators = opr;
 		generatorState.allowedOperations = ops;

@@ -1,4 +1,4 @@
-var appFiles = ['app/js/app.js', 'levelGenerator.js', 'levelGeneratorOperations.js'];
+var appFiles = ['public/js/app.js', 'public/js/pixiSetup.js', 'public/js/levelGenerator.js', 'public/js/levelGeneratorOperations.js'];
 
 module.exports = function (grunt) {
     grunt.initConfig({
@@ -6,20 +6,20 @@ module.exports = function (grunt) {
         uglify: {
             dist: {
                 files: {
-                    'app/js/miby.min.js': appFiles
+                    'public/js/miby.min.js': appFiles
                 }
             }
         },
         watch: {
             grunt: {files: ['Gruntfile.js']},
             client: {
-                files: ['app/js/*.js'],
+                files: appFiles,
                 tasks: ['build']
             }
         },
         jshint: {
           all: appFiles,
-          strict: false
+          strict: true
         }
     });
   

@@ -10,7 +10,7 @@ pixySetup = function() {
 		resolution: window.devicePixelRatio,
 		autoResize: true,
 		backgroundColor: 0xcccccc
-	}
+	};
 	
 	renderer = PIXI.autoDetectRenderer(GAME_WIDTH, GAME_HEIGHT,rendererOptions);
 
@@ -40,4 +40,4 @@ newStage = function() {
 	stage = new PIXI.Container();
 	stage.scale.x = stage.scale.y = ratio;
 	return stage;
-}
+};
