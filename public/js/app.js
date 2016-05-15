@@ -3,7 +3,7 @@
  Author     : niC00L, Ienze
  */
 
- var colors = {plu: '0x008606', min: '0xff8000', tim: '0xf3f129', div: '0xf32929', none: '0xe1e1e1', player: '0x2eb5b3'};
+var colors = {plu: '0x008606', min: '0xff8000', tim: '0xf3f129', div: '0xf32929', none: '0xe1e1e1', player: '0x2eb5b3'};
 
 //some necessary stuff
 var renderer = pixySetup();
@@ -13,17 +13,16 @@ var squareGap = 30;
 var canvasBorder = 30;
 var squareSize = null;
 
-//player settings
+//generated level object
+var generatedLevel;
+
 var playerSettings = {
-	name: "Linda",
 	seed: "miby",
+	name: name,
 	x: 0,
 	y: 0,
 	value: null
 };
-
-//generated level object
-var generatedLevel;
 
 function loadLevel(level) {
 	newStage();
@@ -36,7 +35,11 @@ function loadLevel(level) {
 	setupTopPanel();
 	setupSquares();
 	setupPlayer();
-	startLevel();
+}
+
+function changeSeed(seed) {
+	playerSettings.seed = seed;
+	loadLevel(generatedLevel.level);
 }
 
 function setupTopPanel() {
@@ -94,7 +97,7 @@ function setupPlayer() {
 	playerContainer.moved = function () {
 		this.x = (squareSize + squareGap) * playerSettings.x + canvasBorder;
 		this.y = (squareSize + squareGap) * playerSettings.y + canvasBorder;
-	};
+	}
 	playerContainer.moved();
 
 	var playerBox = new PIXI.Graphics();
@@ -116,39 +119,71 @@ function setupPlayer() {
 	stage.playerContainer = playerContainer;
 }
 
+document.addEventListener("touchmove", function (event) {
+	event.preventDefault();
+}, false);
+
+var swipe = new Hammer(document.querySelector("#miby"), {preventDefault: true});
+swipe.get('swipe').set({direction: Hammer.DIRECTION_ALL});
+
+swipe.on('dragleft swipeleft', function (ev) {
+	keyPressed({keyCode: 37}, true);
+});
+swipe.on('dragright swiperight', function (ev) {
+	keyPressed({keyCode: 39}, true);
+});
+swipe.on('dragup swipeup', function (ev) {
+	keyPressed({keyCode: 38}, true);
+});
+swipe.on('dragdown swipedown', function (ev) {
+	keyPressed({keyCode: 40}, true);
+});
+
 document.addEventListener('keydown', keyPressed);
-function keyPressed(key) {
+function keyPressed(key, a) {
+//	preventDefault(key);
 	pressed = key.keyCode;
-	if (pressed == 38) { //up		
-		if (playerSettings.y === 0) {
+	if (pressed == 38) { //up
+		//kedze pri touch evente nedostava cely objekt key, tak by to hadzalo chybu
+		//preto je tu podmienka na disable len ked je stlacene tlacidlo
+		if (!a) {
+			key.preventDefault();
+		}
+		if (playerSettings.y == 0) {
 			playerSettings.y = generatedLevel.size;
 		}
 		playerSettings.y -= 1;
-		submitMoves.push("u");
+
 	}
-	if (pressed == 40) { //down		
-		if (playerSettings.y === generatedLevel.size - 1) {
+	if (pressed == 40) { //down	
+		if (!a) {
+			key.preventDefault();
+		}
+		if (playerSettings.y == generatedLevel.size - 1) {
 			playerSettings.y = 0;
 		} else {
 			playerSettings.y += 1;
 		}
-		submitMoves.push("d");
 	}
 	if (pressed == 37) { //left		
-		if (playerSettings.x === 0) {
+		if (!a) {
+			key.preventDefault();
+		}
+		if (playerSettings.x == 0) {
 			playerSettings.x = generatedLevel.size;
 		}
 		playerSettings.x -= 1;
-		submitMoves.push("l");
 
 	}
 	if (pressed == 39) { //right		
-		if (playerSettings.x === generatedLevel.size - 1) {
+		if (!a) {
+			key.preventDefault();
+		}
+		if (playerSettings.x == generatedLevel.size - 1) {
 			playerSettings.x = 0;
 		} else {
 			playerSettings.x += 1;
 		}
-		submitMoves.push("r");
 	}
 
 	stage.playerContainer.moved();
@@ -173,47 +208,9 @@ function playerValue() {
 
 		//proceed to next level
 		if (playerSettings.value == generatedLevel.target) {
-			nextLevel();
+			loadLevel(generatedLevel.level + 1);
 		}
 	}
-}
-
-function nextLevel() {
-	endLevel();
-	loadLevel(generatedLevel.level + 1);
-}
-
-var submitTimer = null;
-var submitStart = null;
-var submitMoves = null;
-function startLevel() {
-	submitTimer = Date.now();
-	submitStart = {
-		x: playerSettings.x,
-		y: playerSettings.y
-	};
-	submitMoves = [];
-}
-
-function endLevel() {
-	var time = Date.now() - submitTimer;
-
-	try {
-		var xmlhttp = new XMLHttpRequest();
-		xmlhttp.open("POST", "/api/level");
-		xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-		xmlhttp.send(JSON.stringify({
-			"success": true,
-			"name": playerSettings.name,
-			"seed": playerSettings.seed,
-			"generator": 1,
-			"level": generatedLevel.level,
-			"value": playerSettings.value,
-			"time": time,
-			"start": submitStart,
-			"moves": submitMoves
-		}));
-	} catch (e) { }
 }
 
 loadLevel(1);

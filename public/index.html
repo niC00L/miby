@@ -12,22 +12,32 @@
 		<div id="game">
 			<div class="top-panel">
 				<h1>MiBy</h1>
-				<div >
+				<div>
 					Level: <span id="level"></span>
 				</div>
-				<div >
+				<div>
 					Target: <span id="target"></span>
 				</div>
+				<a href="" class="colorHelp">Color help</a>
 			</div>
 			<div id="miby"></div>
+		</div>
+
+		<div id="colorHelpModal" class="hidden">
+			<h2>What do these colors mean?</h2>
+			<div id="colors">
+			</div>
+			<a href="" class="close">Good! I got it!</a>
 		</div>
 		<!-- libraries -->
 		<script src="js/pixi.js"></script>
 		<script src="js/xor4096.min.js"></script>
+		<script src="http://hammerjs.github.io/dist/hammer.min.js"></script>
 		<!-- miby -->
 		<script src="js/pixiSetup.js"></script>
 		<script src="js/levelGeneratorOperations.js"></script>
 		<script src="js/levelGenerator.js"></script>
 		<script src="js/app.js"></script>
+		<script src="js/page.js"></script>
 	</body>	
 </html>
