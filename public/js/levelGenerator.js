@@ -28,7 +28,7 @@ function generateLevel(seed, level) {
 	};
 
 	var genBaseRange = function(generatorState) {
-		generatorState.baseRange.from = -1 * ((generatorState.level * generatorState.level) / 4 + (generatorState.level / 2 ) + 10);
+		generatorState.baseRange.from = ((generatorState.level / -3.0 ));
 		generatorState.baseRange.to = (generatorState.level * generatorState.level) / 4 + (generatorState.level / 2 ) + 10;
 	};
 
@@ -50,15 +50,15 @@ function generateLevel(seed, level) {
 	};
 
 	var genTargetOperations = function(generatorState) {
-		generatorState.targetOperations = Math.max(1, Math.min(generatorState.size * generatorState.size, Math.round(rngRange(generatorState) / 8)));
+		generatorState.targetOperations = Math.max(1 + Math.round(level / 8), Math.min(generatorState.size * generatorState.size, Math.round(rngRange(generatorState) / 6)));
 	};
 
 	var genTargetUsefulOperations = function(generatorState) {
-		generatorState.targetUsefulOperations = Math.max(Math.round(rngRange(generatorState) / 5), generatorState.targetOperations);
+		generatorState.targetUsefulOperations = Math.min(Math.round(rngRange(generatorState) / 2), generatorState.targetOperations);
 	};
 
 	var genTargetPossibilities = function(generatorState) {
-		generatorState.targetPossibilities = Math.max(1, Math.min(Math.round(10 / generatorState.level), generatorState.targetUsefulOperations));
+		generatorState.targetPossibilities = Math.round(Math.max(1, Math.min(generatorState.targetUsefulOperations, 4 - (generatorState.level / 6))));
 	};
 
 	var genAllowedOperations = function(generatorState) {
@@ -70,7 +70,7 @@ function generateLevel(seed, level) {
 		} else if(generatorState.level <= 15) {
 			opr = ["plu", "min"];
 			ops = ["+", "-"];
-		} else if(generatorState.level <= 20) {
+		} else if(generatorState.level <= 30) {
 			opr = ["plu", "min"];
 			ops = ["+", "-", "*"];
 		} else {
@@ -88,13 +88,17 @@ function generateLevel(seed, level) {
 
 		for(i = 0; i < generatorState.targetPossibilities; i++) {
 			var j = 0;
-			var possibilityUsefulTiles = [
-			{number: generatorState.previousTarget},
-			{number: generatorState.target}
-			];
+			var from_n = generatorState.previousTarget;
+			var operation = null;
 
-			while(generatorState.usefulTiles.length < generatorState.targetUsefulOperations && j <= perPossibility) {
+			while(generatorState.usefulTiles.length + 1 < generatorState.targetUsefulOperations && j <= perPossibility) {
 				
+				operation = genUsefulOperation(from_n, false, generatorState);
+				generatorState.usefulTiles.push(operation);
+
+				from_n = applyOperation(operation, from_n);
+				
+				/*
 				var splitOn = Math.round(generatorState.rng() * (possibilityUsefulTiles.length - 2));
 				var from_n = possibilityUsefulTiles[0].number;
 				var to_n = null;
@@ -113,13 +117,13 @@ function generateLevel(seed, level) {
 					splitOn++;
 					possibilityUsefulTiles.splice(splitOn, 0, tiles.pop());
 				}
+				*/
 
 				j++;
 			}
 
-			for(i = 1; i < possibilityUsefulTiles.length - 1; i++) {
-				generatorState.usefulTiles.push(possibilityUsefulTiles[i]);
-			}
+			operation = genUsefulOperation(from_n, true, generatorState);
+			generatorState.usefulTiles.push(operation);
 		}
 	};
 
@@ -182,22 +186,7 @@ function generateLevel(seed, level) {
 	genUselessTiles(generatorState);
 	genMap(generatorState);
 
+	console.log(generatorState);
+
 	return generatorState;
 }
-
-/* TODO
-function printLevel(state) {
-	for(y = 0; y < state.size; y++) {
-		var line = " ";
-		for(x = 0; x < state.size; x++) {
-			if(state.level[y][x]) {
-				console.log(state.level[y][x]);
-				line = line + state.level[y][x].operator.charAt(0)+state.level[y][x].number + " ";
-			} else {
-				line = line + "n0 ";
-			}
-		}
-		console.log(line);
-	}
-}
-*/
