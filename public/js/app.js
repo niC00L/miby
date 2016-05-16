@@ -154,9 +154,9 @@ function keyPressed(key, a) {
 			playerSettings.y = generatedLevel.size;
 		}
 		playerSettings.y -= 1;
-
+		submitMoves += "u";
 	}
-	if (pressed == 40) { //down	
+	if (pressed == 40) { //down
 		if (!a) {
 			key.preventDefault();
 		}
@@ -165,8 +165,9 @@ function keyPressed(key, a) {
 		} else {
 			playerSettings.y += 1;
 		}
+		submitMoves += "d";
 	}
-	if (pressed == 37) { //left		
+	if (pressed == 37) { //left
 		if (!a) {
 			key.preventDefault();
 		}
@@ -174,9 +175,10 @@ function keyPressed(key, a) {
 			playerSettings.x = generatedLevel.size;
 		}
 		playerSettings.x -= 1;
+		submitMoves += "l";
 
 	}
-	if (pressed == 39) { //right		
+	if (pressed == 39) { //right
 		if (!a) {
 			key.preventDefault();
 		}
@@ -185,6 +187,7 @@ function keyPressed(key, a) {
 		} else {
 			playerSettings.x += 1;
 		}
+		submitMoves += "r";
 	}
 
 	stage.playerContainer.moved();
@@ -228,7 +231,7 @@ function startLevel() {
 		x: playerSettings.x,
 		y: playerSettings.y
 	};
-	submitMoves = [];
+	submitMoves = "";
 }
 
 function endLevel() {
