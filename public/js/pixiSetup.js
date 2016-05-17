@@ -9,7 +9,7 @@ pixySetup = function() {
 		transparent: false,
 		resolution: window.devicePixelRatio,
 		autoResize: true,
-		backgroundColor: 0xcccccc
+		backgroundColor: 0xffffff
 	};
 	
 	renderer = PIXI.autoDetectRenderer(GAME_WIDTH, GAME_HEIGHT,rendererOptions);
