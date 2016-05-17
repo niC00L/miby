@@ -6,19 +6,25 @@
 		<meta name="author" content="Ienze, niC00L">
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link href='https://fonts.googleapis.com/css?family=Josefin+Sans:400,700' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="css/app.css">
 	</head>
 	<body>
 		<div id="game">
 			<div class="top-panel">
-				<h1>MiBy</h1>
-				<div>
-					Level: <span id="level"></span>
+				<div class="left">
+					<h1>Mi<strong>By</strong></h1>
+					<span class="restart" onclick="loadLevel(1)"><img src="http://icons.iconarchive.com/icons/icons8/ios7/256/Very-Basic-Reload-icon.png"></span>
+					<a href="" class="colorHelp">Help</a>					
 				</div>
-				<div>
-					Target: <span id="target"></span>
-				</div>
-				<a href="" class="colorHelp">Color help</a>
+				<div class="right">
+					<div class="level">
+						Level: <span id="level"></span>
+					</div>
+					<div class="target">
+						Target: <span id="target"></span>
+					</div>				
+				</div>				
 			</div>
 			<div id="miby"></div>
 		</div>
