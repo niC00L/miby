@@ -10,7 +10,7 @@ var renderer = pixySetup();
 
 //squares dimensions
 var squareGap = 30;
-var canvasBorder = 30;
+var canvasBorder = 5;
 var squareSize = null;
 
 //generated level object
@@ -63,7 +63,7 @@ function setupSquares() {
 
 			if (square) {
 				op = square.operator;
-				number = new PIXI.Text(square.number, {font: 'bold 48px Arial', fill: 0xffffff, align: 'center'});
+				number = new PIXI.Text(square.number, {font: 'bold 48px Josefin Sans', fill: colors[op], align: 'center'});
 				number.x = 20;
 				number.y = 20;
 			}
@@ -72,10 +72,13 @@ function setupSquares() {
 			}
 
 			var graphics = new PIXI.Graphics();
+			var radius = squareSize/2
 
-			graphics.beginFill(colors[op]);
-			graphics.drawRoundedRect(0, 0, squareSize, squareSize, 10);
-			graphics.endFill();
+//			graphics.beginFill(colors[op]);
+			graphics.lineStyle(6, colors[op], 1);
+			graphics.drawCircle(0+radius, 0+radius, radius);
+//			graphics.drawRoundedRect(0, 0, squareSize, squareSize, 10);
+//			graphics.endFill();
 
 			squareContainer.addChild(graphics);
 			squareContainer.graphics = graphics;
@@ -83,7 +86,7 @@ function setupSquares() {
 				squareContainer.addChild(number);
 				squareContainer.number = number;
 			}
-
+			var graphics = new PIXI.Sprite(graphics.generateTexture());
 			stage.addChild(squareContainer);
 			stage.squareContainers[i][j] = squareContainer;
 		}
@@ -103,12 +106,15 @@ function setupPlayer() {
 
 	var playerBox = new PIXI.Graphics();
 
-	var number = new PIXI.Text(playerSettings.value, {font: 'bold 48px Arial', fill: 0xffffff, align: 'center'});
+	var number = new PIXI.Text(playerSettings.value, {font: 'bold 48px Josefin Sans', fill: 0xffffff, align: 'center'});
 	number.x = 20;
 	number.y = 20;
 
 	playerBox.beginFill(colors.player);
-	playerBox.drawRoundedRect(0, 0, squareSize, squareSize, 10);
+//	playerBox.lineStyle(5, colors.player, 1);
+	var radius = squareSize/2;
+	playerBox.drawCircle(0+radius, 0+radius, radius);
+//	playerBox.drawRoundedRect(0, 0, squareSize, squareSize, 10);
 	playerBox.endFill();
 
 	playerContainer.addChild(playerBox);
@@ -205,9 +211,13 @@ function playerValue() {
 		//edit square
 		var squareContainer = stage.squareContainers[playerSettings.x][playerSettings.y];
 		squareContainer.graphics.clear();
-		squareContainer.graphics.beginFill(colors.none);
-		squareContainer.graphics.drawRoundedRect(0, 0, squareSize, squareSize, 10);
-		squareContainer.graphics.endFill();
+		var radius = squareSize/2
+
+		squareContainer.graphics.lineStyle(6, colors.none, 1);
+		squareContainer.graphics.drawCircle(0+radius, 0+radius, radius);
+//		squareContainer.graphics.beginFill(colors.none);
+//		squareContainer.graphics.drawRoundedRect(0, 0, squareSize, squareSize, 10);
+//		squareContainer.graphics.endFill();
 		squareContainer.removeChild(squareContainer.number);
 
 		//proceed to next level
