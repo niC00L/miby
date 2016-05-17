@@ -12,7 +12,7 @@ pixySetup = function() {
 		backgroundColor: 0xffffff
 	};
 	
-	renderer = PIXI.autoDetectRenderer(GAME_WIDTH, GAME_HEIGHT,rendererOptions);
+	renderer = new PIXI.CanvasRenderer(GAME_WIDTH, GAME_HEIGHT,rendererOptions);
 
 	var mibyContainer = document.querySelector("#miby");
 	mibyContainer.appendChild(renderer.view);
