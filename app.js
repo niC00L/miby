@@ -25,6 +25,7 @@ app.use(session({
 }));
 
 app.use('/api/level', require('./api/level'));
+app.use('/api/time', require('./api/time'));
 app.use('/api/top', require('./api/top'));
 
 // catch 404 and forward to error handler
