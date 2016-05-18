@@ -246,7 +246,7 @@ function startLevel() {
 
 function endLevel() {
 	var time = Date.now() - submitTimer;
-	var serverAddress = 'http://ienze.me/miby';
+	var serverAddress = 'http://miby.ienze.me';
 	try {
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.open("POST", serverAddress+"/api/level");

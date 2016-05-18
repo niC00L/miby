@@ -19,14 +19,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
   secret: 'fs42we5q87b1i2w8z6da14a7s5h6e',
-  name: 'ienzesGame',
+  name: 'miby',
   resave: false,
   saveUninitialized: true
 }));
 
-app.use('/api/level', require('./api/level'));
-app.use('/api/time', require('./api/time'));
-app.use('/api/top', require('./api/top'));
+app.use('/api', require('./api/api'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
