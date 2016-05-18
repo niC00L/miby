@@ -52,6 +52,7 @@ body:after {
 a {
 	font-size: 1.3rem;
 	text-decoration: none;
+	color: black;
 }
 
 .restart {
@@ -190,7 +191,7 @@ noscript {
 	text-align: left;
 }
 
-#scoreTable th, #scoreTable td {
+#scoreTable th:not(:last-child), #scoreTable td:not(:last-child) {
 	padding-right: 2rem;
 }
 
