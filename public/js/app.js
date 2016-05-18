@@ -111,7 +111,7 @@ function setupPlayer() {
 	number.y = 20;
 
 	playerBox.beginFill(colors.player);
-//	playerBox.lineStyle(5, colors.player, 1);
+	playerBox.lineStyle(5, colors.player, 1);
 	var radius = squareSize/2;
 	playerBox.drawCircle(0+radius, 0+radius, radius);
 //	playerBox.drawRoundedRect(0, 0, squareSize, squareSize, 10);

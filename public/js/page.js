@@ -5,32 +5,40 @@
  Script used for page editing
  */
 
-var colorModal = document.querySelector('#colorHelpModal');
-var colorModalButton = document.querySelector('.colorHelp');
-var closeButton = document.querySelector('.close');
+var openButton = document.getElementsByClassName('open');
+var closeButton = document.getElementsByClassName('close');
 var colorsHelp = document.querySelector('#colors');
 
-colorModalButton.addEventListener('click', function (e) {
-	e.preventDefault();
-	colorModal.className = 'visible';
-}, false);
+for (var i = 0; i < openButton.length; i++) {		
+	openButton[i].addEventListener('click', function (e) {
+		var open = this.dataset.open;	
+		e.preventDefault();
+		document.getElementById(open).className = 'visible';
+	}, false);
+}
 
-closeButton.addEventListener('click', function (e) {
-	e.preventDefault();
-	closeButton.parentElement.className = 'hidden';
-}, false);
+for (var i = 0; i < closeButton.length; i++) {		
+	closeButton[i].addEventListener('click', function (e) {
+		var close = this.dataset.close;
+		e.preventDefault();
+		document.getElementById(close).className = 'hidden';
+	}, false);
+}
+
+function setUsername() {
+	name = document.querySelector('[name=username]').value;
+	playerSettings.name = name;
+}
 
 function drawColors() {
-	colorsHelp.innerHTML += '<ul>';
 	var color;
 	var element;
 
 	for (var op in colors) {
 		color = colors[op].substring(2);
-		element = '<li style="color:#'+color+'">'+op+'</li>';
+		element = '<span class="color" style="color:#' + color + '; border-color:#' + color + '">' + op + '</span>';
 		colorsHelp.innerHTML += element;
 	}
-	colorsHelp.innerHTML += '</ul>';
 }
 
 drawColors();

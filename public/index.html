@@ -15,7 +15,7 @@
 				<div class="left">
 					<h1>Mi<strong>By</strong></h1>
 					<span class="restart" onclick="loadLevel(1)"><img src="http://icons.iconarchive.com/icons/icons8/ios7/256/Very-Basic-Reload-icon.png"></span>
-					<a href="" class="colorHelp">Help</a>					
+					<a href="" class="open" data-open="helpModal">Help</a>					
 				</div>
 				<div class="right">
 					<div class="level">
@@ -29,11 +29,32 @@
 			<div id="miby"></div>
 		</div>
 
-		<div id="colorHelpModal" class="hidden">
-			<h2>What do these colors mean?</h2>
-			<div id="colors">
+		<div id="helpModal" class="hidden">
+			<div>
+				<h2>What am I supposed to do?</h2>
+				<p>Swipe or use arrow keys to move. Get target value.</p>
+				<p>Try to reach highest level (there is infinity of them)</p>
+				<p>If you screw up, there's a reload button.</p>
+				<p>Note that it will take you back to level 1.</p>
+				
+				<p class='separator'>•••</p>
+				
+				<h2>What do these colors mean?</h2>
+				<p> different colors are different operands</p>
+				<div id="colors">
+				</div>
+				<p class='separator'></p>
+				<a href="" class="button close" data-close="helpModal">Good!<strong> I got it!</strong></a>
 			</div>
-			<a href="" class="close">Good! I got it!</a>
+		</div>
+
+		<div id="username" class="visible">
+			<div>
+				<h2>Type your nickname here</h2>
+				<p class="description">so you can find yourself in high score table</p>
+				<p><input type="text" name="username" placeholder="your name"></p>
+				<a href="" class="button close" data-close="username" onclick="setUsername()">Play<strong>!</strong></a>
+			</div>
 		</div>
 		<!-- libraries -->
 		<script src="js/pixi.js"></script>
