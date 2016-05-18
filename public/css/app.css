@@ -86,10 +86,6 @@ a {
 }
 /*...*/
 
-#miby {
-    height: 80vh;
-}
-
 #debug {
     text-align: left;
     position: absolute;
@@ -181,5 +177,9 @@ p {
 .separator {
 	margin: .5rem;
 	font-size: 2rem;
+	text-align: center;
+}
+
+.copyright {
 	text-align: center;
 }

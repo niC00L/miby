@@ -23,7 +23,7 @@ pixySetup = function() {
 	function resize() {
 
 		ratio = Math.min(window.innerWidth/GAME_WIDTH,
-			((window.innerHeight * 0.8) - 16)/GAME_HEIGHT);
+			((window.innerHeight * 0.75) - 16)/GAME_HEIGHT);
 
 		if(stage) {
 			stage.scale.x = stage.scale.y = ratio;
