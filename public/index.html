@@ -14,7 +14,8 @@
 			<div class="top-panel">
 				<div class="left">
 					<h1>Mi<strong>By</strong></h1>
-					<span class="restart" onclick="loadLevel(1)"><img src="http://icons.iconarchive.com/icons/icons8/ios7/256/Very-Basic-Reload-icon.png"></span>
+					<span class="restart open" data-open="highscore"><img src="https://cdn3.iconfinder.com/data/icons/award-and-medal-line-3/48/122-128.png"></span>
+					<span class="restart" onclick="loadLevel(1)"><img src="http://icons.iconarchive.com/icons/icons8/ios7/256/Very-Basic-Reload-icon.png"></span>					
 					<a href="" class="open" data-open="helpModal">Help</a>					
 				</div>
 				<div class="right">
@@ -30,7 +31,7 @@
 			<footer class ="copyright">&copy; 2016 created in <strong>14 hours</strong> by <a href="http://ienze.me">Ienze</a> and <a href="http://nicool.rocks">niC00L</a></footer>
 		</div>
 
-		<div id="helpModal" class="hidden">
+		<div id="helpModal" class="modal hidden">
 			<div>
 				<h2>What am I supposed to do?</h2>
 				<p>Swipe or use arrow keys to move. Get target value.</p>
@@ -49,16 +50,28 @@
 			</div>
 		</div>
 
-		<div id="username" class="visible">
+		<div id="username" class="modal visible">
 			<div>				
 				<h2>Type your nickname here</h2>
 				<p class="description">so you can find yourself in high score table (it will be here soon, I promise)</p>
 				<form>
-				<p><input type="text" name="username" placeholder="your name"></p>				
-				<button class="button close" data-close="username" onclick="setUsername()">Play<strong>!</strong></button>
+					<p><input type="text" name="username" placeholder="your name"></p>				
+					<button class="button close" data-close="username" onclick="setUsername()">Play<strong>!</strong></button>
 				</form>
 			</div>
-		</div>		
+		</div>	
+
+		<div id="highscore" class="modal hidden">
+			<div>				
+				<h2>Tøp 10 players</h2>
+				<table id="scoreTable">					
+					<tbody>
+						<tr><th>Rank</th><th>Name</th><th>Level<th></tr>
+					</tbody>
+				</table>
+				<a href="" class="button close" data-close="highscore">OK. Close it <strong>now!</strong></a>
+			</div>
+		</div>	
 
 		<noscript>
 		<div>
