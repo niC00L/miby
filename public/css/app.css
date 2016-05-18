@@ -118,9 +118,11 @@ a {
 
 .button {
 	font-size: 1.8rem;
-	/*font-weight: bold;*/
+	background: none;
+	border: none;
 	text-decoration: none;
 	color: black;
+	font-family: 'Josefin Sans', sans-serif;
 }
 
 input {
