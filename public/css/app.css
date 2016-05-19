@@ -154,15 +154,16 @@ p {
 	background-color: hsla(0, 0%, 100%, 1);
 }
 
-#colors .color {
+.color {
 	display: inline-flex;
-	width: 3.5rem;
-	height: 3.5rem;	
+	width: 3rem;
+	height: 3rem;	
 	align-items: center;
     justify-content: center;
 	margin: .2rem;
 	border: 3px solid;
 	border-radius: 50%;
+	font-size: 2.5rem;
 }
 
 .separator {

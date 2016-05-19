@@ -4,6 +4,7 @@
  
  Script used for page editing
  */
+var operands = {plu: '+', min: '-', tim: '*', div: '/'};
 
 var openButton = document.getElementsByClassName('open');
 var closeButton = document.getElementsByClassName('close');
@@ -36,9 +37,14 @@ function drawColors() {
 
 	for (var op in colors) {
 		color = colors[op].substring(2);
-		element = '<span class="color" style="color:#' + color + '; border-color:#' + color + '">' + op + '</span>';
-		colorsHelp.innerHTML += element;
+		if (operands[op]) {
+			element = '<span class="color" style="color:#' + color + '; border-color:#' + color + '">' + operands[op] + '</span>';
+			colorsHelp.innerHTML += element;
+		}
 	}
+	var otherHelp = document.querySelector('#others');
+	otherHelp.innerHTML += '<p><span class="color" style="border-color:#' + colors['none'].substring(2) + '"></span> This is empty tile</p>';
+	otherHelp.innerHTML += '<p><span class="color" style="border-color:#' + colors['player'].substring(2) + '; background-color:#' + colors['player'].substring(2) + '"></span> This is player (you)</p>';
 }
 
 drawColors();
