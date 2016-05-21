@@ -255,7 +255,7 @@ function endLevel() {
 			"success": true,
 			"name": playerSettings.name,
 			"seed": playerSettings.seed,
-			"generator": 1,
+			"generator": 2,
 			"level": generatedLevel.level,
 			"value": playerSettings.value,
 			"time": time,
