@@ -98,8 +98,6 @@ var LevelDecorator = function(generatorState) {
 	this.linearSymmetryDecorator = function() {
 		var tile = tiles.pop();
 
-		console.log("linearSymmetryCoord");
-
 		var linearSymmetryCoord = function(x, y) {
 			var s2 = (generatorState.size-1) / 2;
 			return {
@@ -113,7 +111,6 @@ var LevelDecorator = function(generatorState) {
 			for (x = 0; x < generatorState.size; x++) {
 				if(map[y][x]) {
 					coords = linearSymmetryCoord(x, y);
-					console.log({x:x, y:y},coords);
 					if(!map[coords.y][coords.x]){
 						map[coords.y][coords.x] = tile;
 						return;

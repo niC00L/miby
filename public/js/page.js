@@ -69,6 +69,5 @@ function printScore(response) {
 			table.insertAdjacentHTML('beforeend', elem);
 		}
 	}
-	console.log(table.innerHtml);
 }
 
