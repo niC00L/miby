@@ -1,101 +1,106 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<title>Miby</title>
-		<meta name="description" content="This is game we made in 12 hours.">
-		<meta name="author" content="Ienze, niC00L">
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link href='https://fonts.googleapis.com/css?family=Josefin+Sans:400,700' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" type="text/css" href="css/app.css">
-	</head>
-	<body>
-		<div id="game">
-			<div class="top-panel">
-				<div class="left">
-					<h1>Mi<strong>By</strong></h1>
-					<span class="restart open" data-open="highscore"><img src="https://cdn3.iconfinder.com/data/icons/award-and-medal-line-3/48/122-128.png"></span>
-					<span class="restart" onclick="loadLevel(1)"><img src="http://icons.iconarchive.com/icons/icons8/ios7/256/Very-Basic-Reload-icon.png"></span>					
-					<a href="" class="open" data-open="helpModal">Help</a>					
+<head>
+	<meta charset="UTF-8">
+	<title>Miby</title>
+	<meta name="description" content="This is game we made in 14 hours.">
+	<meta name="author" content="Ienze, niC00L">
+	<meta property="og:title" content="Miby">
+	<meta property="og:description" content="This is game we made in 14 hours.">
+	<meta property="og:type" content="website">
+	<meta property="og:image" content="http://ienze.me/img/screenshot.png">
+	<meta property="og:url" content="http://miby.ienze.me">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link href='https://fonts.googleapis.com/css?family=Josefin+Sans:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="css/app.css">
+</head>
+<body>
+	<div id="game">
+		<div class="top-panel">
+			<div class="left">
+				<h1>Mi<strong>By</strong></h1>
+				<span class="restart open" data-open="highscore"><img src="https://cdn3.iconfinder.com/data/icons/award-and-medal-line-3/48/122-128.png"></span>
+				<span class="restart" onclick="loadLevel(1)"><img src="http://icons.iconarchive.com/icons/icons8/ios7/256/Very-Basic-Reload-icon.png"></span>					
+				<a href="" class="open" data-open="helpModal">Help</a>					
+			</div>
+			<div class="right">
+				<div class="level">
+					Level: <span id="level"></span>
 				</div>
-				<div class="right">
-					<div class="level">
-						Level: <span id="level"></span>
-					</div>
-					<div class="target">
-						Target: <span id="target"></span>
-					</div>				
+				<div class="target">
+					Target: <span id="target"></span>
 				</div>				
-			</div>
-			<div id="miby"></div>
-			<footer class ="copyright">&copy; 2016 created in <strong>14 hours</strong> by <a href="http://ienze.me">Ienze</a> and <a href="http://nicool.rocks">niC00L</a></footer>
+			</div>				
 		</div>
+		<div id="miby"></div>
+		<footer class ="copyright">&copy; 2016 created in <strong>14 hours</strong> by <a href="http://ienze.me">Ienze</a> and <a href="http://nicool.rocks">niC00L</a></footer>
+	</div>
 
-		<div id="helpModal" class="modal hidden">
-			<div>
-				<h2>What am I supposed to do?</h2>
-				<p>Swipe or use arrow keys to move. Get target value.</p>
-				<p>Try to reach highest level (there is infinity of them)</p>
-				<p>If you screw up, there's a reload button.</p>
-				<p>Note that it will take you back to level 1.</p>
+	<div id="helpModal" class="modal hidden">
+		<div>
+			<h2>What am I supposed to do?</h2>
+			<p>Swipe or use arrow keys to move. Get target value.</p>
+			<p>Try to reach highest level (there is infinity of them)</p>
+			<p>If you screw up, there's a reload button.</p>
+			<p>Note that it will take you back to level 1.</p>
 
-				<p class='separator'>•••</p>
+			<p class='separator'>•••</p>
 
-				<h2>What do these colors mean?</h2>
-				<p> different colors are different <strong>operands</strong></p>
-				<div id="colors">
-				</div>
-				<p> Instead of <strong>these two</strong></p>
-				<div id="others">
-				</div>
-				<p class='separator'></p>
-				<a href="" class="button close" data-close="helpModal">Good!<strong> I got it!</strong></a>
+			<h2>What do these colors mean?</h2>
+			<p> different colors are different <strong>operands</strong></p>
+			<div id="colors">
 			</div>
+			<p> Instead of <strong>these two</strong></p>
+			<div id="others">
+			</div>
+			<p class='separator'></p>
+			<a href="" class="button close" data-close="helpModal">Good!<strong> I got it!</strong></a>
 		</div>
+	</div>
 
-		<div id="username" class="modal visible">
-			<div>				
-				<h2>Type your nickname here</h2>
-				<p class="description">so you can find yourself in high score table</p>
-				<form>
-					<p><input type="text" name="username" placeholder="your name"></p>				
-					<button class="button close" data-close="username" onclick="setUsername()">Play<strong>!</strong></button>
-				</form>
-				<p>
-					<img src="img/deer.png" style="width: 50px; padding-top: 2em" />
-				</p>
-			</div>
-		</div>	
+	<div id="username" class="modal visible">
+		<div>				
+			<h2>Type your nickname here</h2>
+			<p class="description">so you can find yourself in high score table</p>
+			<form>
+				<p><input type="text" name="username" placeholder="your name"></p>				
+				<button class="button close" data-close="username" onclick="setUsername()">Play<strong>!</strong></button>
+			</form>
+			<p>
+				<img src="img/deer.png" style="width: 50px; padding-top: 2em" />
+			</p>
+		</div>
+	</div>	
 
-		<div id="highscore" class="modal hidden">
-			<div>				
-				<h2>Tøp 10 players</h2>
-				<table id="scoreTable">					
-					<tbody>
-						<tr><th>Rank</th><th>Name</th><th>Level</th></tr>
-					</tbody>
-				</table>
-				<a href="" class="button close" data-close="highscore">OK. Close it <strong>now!</strong></a>
-			</div>
-		</div>	
+	<div id="highscore" class="modal hidden">
+		<div>				
+			<h2>Tøp 10 players</h2>
+			<table id="scoreTable">					
+				<tbody>
+					<tr><th>Rank</th><th>Name</th><th>Level</th></tr>
+				</tbody>
+			</table>
+			<a href="" class="button close" data-close="highscore">OK. Close it <strong>now!</strong></a>
+		</div>
+	</div>	
 
-		<noscript>
+	<noscript>
 		<div>
 			<p>If you thought you can play a browser game</p> 
 			<p>without a <strong>javascript</strong> you were wrong.</p>
 			<p>So go and <strong>turn it on</strong>.</p>
 		</div>
-		</noscript>
-		<!-- libraries -->
-		<script src="js/pixi.js"></script>
-		<script src="js/xor4096.min.js"></script>
-		<script src="http://hammerjs.github.io/dist/hammer.min.js"></script>
-		<!-- miby -->
-		<script src="js/pixiSetup.js"></script>
-		<script src="js/levelGeneratorOperations.js"></script>
-		<script src="js/levelDecorator.js"></script>
-		<script src="js/levelGenerator.js"></script>
-		<script src="js/app.js"></script>
-		<script src="js/page.js"></script>
-	</body>	
+	</noscript>
+	<!-- libraries -->
+	<script src="js/pixi.js"></script>
+	<script src="js/xor4096.min.js"></script>
+	<script src="http://hammerjs.github.io/dist/hammer.min.js"></script>
+	<!-- miby -->
+	<script src="js/pixiSetup.js"></script>
+	<script src="js/levelGeneratorOperations.js"></script>
+	<script src="js/levelDecorator.js"></script>
+	<script src="js/levelGenerator.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/page.js"></script>
+</body>	
 </html>
