@@ -29,7 +29,7 @@ function generateLevel(seed, level) {
 
 	var genBaseRange = function(generatorState) {
 		generatorState.baseRange.from = ((generatorState.level / -3.0 ));
-		generatorState.baseRange.to = (generatorState.level * generatorState.level) / 4 + (generatorState.level / 2 ) + 10;
+		generatorState.baseRange.to = (generatorState.level * generatorState.level) / 6 + (generatorState.level / 2 ) + 10;
 	};
 
 	var genSize = function(generatorState) {
@@ -46,15 +46,22 @@ function generateLevel(seed, level) {
 	};
 
 	var genTarget = function(generatorState) {
-		generatorState.target = rngRange(generatorState);
+		if(generatorState.level == 0) {
+			generatorState.target = 0;
+		} else {
+			generatorState.target = rngRange(generatorState);
+		}
 	};
 
 	var genTargetOperations = function(generatorState) {
-		generatorState.targetOperations = Math.max(1 + Math.round(level / 8), Math.min(generatorState.size * generatorState.size, Math.round(rngRange(generatorState) / 6)));
+		var c = generatorState.level + Math.E;
+		generatorState.targetOperations = Math.round(Math.max(1 + level / 8, Math.min(generatorState.size * generatorState.size, generatorState.rng() * 
+			(Math.log(c*c)*2) + (1 + generatorState.level/8)
+			)));
 	};
 
 	var genTargetUsefulOperations = function(generatorState) {
-		generatorState.targetUsefulOperations = Math.min(Math.round(rngRange(generatorState) / 2), generatorState.targetOperations);
+		generatorState.targetUsefulOperations = Math.round(generatorState.targetOperations/2 + generatorState.rng() * generatorState.targetOperations/2);
 	};
 
 	var genTargetPossibilities = function(generatorState) {
@@ -67,10 +74,10 @@ function generateLevel(seed, level) {
 		if(generatorState.level <= 2) {
 			opr = ["plu"];
 			ops = ["+"];
-		} else if(generatorState.level <= 15) {
+		} else if(generatorState.level <= 21) {
 			opr = ["plu", "min"];
 			ops = ["+", "-"];
-		} else if(generatorState.level <= 30) {
+		} else if(generatorState.level <= 42) {
 			opr = ["plu", "min"];
 			ops = ["+", "-", "*"];
 		} else {
@@ -91,34 +98,13 @@ function generateLevel(seed, level) {
 			var from_n = generatorState.previousTarget;
 			var operation = null;
 
-			while(generatorState.usefulTiles.length + 1 < generatorState.targetUsefulOperations && j <= perPossibility) {
+			while(generatorState.usefulTiles.length + 1 < generatorState.targetUsefulOperations && j <= perPossibility - 1) {
 				
 				operation = genUsefulOperation(from_n, false, generatorState);
 				generatorState.usefulTiles.push(operation);
 
 				from_n = applyOperation(operation, from_n);
 				
-				/*
-				var splitOn = Math.round(generatorState.rng() * (possibilityUsefulTiles.length - 2));
-				var from_n = possibilityUsefulTiles[0].number;
-				var to_n = null;
-				for(j = 1; j <= splitOn; j++) {
-					from_n = applyOperation(possibilityUsefulTiles[j], from_n);
-				}
-				if(possibilityUsefulTiles[splitOn+1].operator) {
-					to_n = applyOperation(possibilityUsefulTiles[splitOn+1], from_n);
-				} else {
-					to_n = possibilityUsefulTiles[splitOn+1].number;
-				}
-
-				var tiles = splitToOperations(from_n, to_n, generatorState);
-				
-				while(tiles.length > 0) {
-					splitOn++;
-					possibilityUsefulTiles.splice(splitOn, 0, tiles.pop());
-				}
-				*/
-
 				j++;
 			}
 
@@ -144,32 +130,9 @@ function generateLevel(seed, level) {
 	};
 
 	var genMap = function(generatorState) {
-		var tiles = generatorState.usefulTiles.concat(generatorState.uselessTiles);
 		
-		var x, y;
-
-		var map = new Array(generatorState.size);
-		for (y= 0; y < generatorState.size; y++) {
-			map[y] = new Array(generatorState.size);
-			for (x   = 0; x < generatorState.size; x++) {
-				map[y][x] = null;
-			}
-		}
-
-		while(tiles.length > 0) {
-			var tile = tiles.pop();
-			
-			x = Math.round(generatorState.rng() * (generatorState.size - 1));
-			y = Math.round(generatorState.rng() * (generatorState.size - 1));
-
-			if(map[y][x]) {
-				tiles.push(map[y][x]);
-			}
-
-			map[y][x] = tile;
-		}
-
-		generatorState.map = map;
+		levelDecorator = new LevelDecorator(generatorState);
+		generatorState.map = levelDecorator.decorateMap();
 	};
 
 	generatorState = getGeneratorState(level);
