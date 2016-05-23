@@ -186,7 +186,7 @@ function generateLevel(seed, level) {
 	genUselessTiles(generatorState);
 	genMap(generatorState);
 
-	console.log(generatorState);
+//	console.log(generatorState);
 
 	return generatorState;
 }
