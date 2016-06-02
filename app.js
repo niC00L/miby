@@ -21,7 +21,10 @@ app.use(session({
   secret: 'fs42we5q87b1i2w8z6da14a7s5h6e',
   name: 'miby',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 3600000 * 24 * 7 * 10
+  }
 }));
 
 app.use('/api', require('./api/api'));
