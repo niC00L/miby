@@ -49,24 +49,32 @@ function drawColors() {
 
 drawColors();
 
-var oReq = new XMLHttpRequest();
-oReq.onload = function (e) {
-	var response = JSON.parse(oReq.response);
-	printScore(response);
-}
-oReq.open("GET", "http://miby.ienze.me/api/top");
-oReq.send();
-
-function printScore(response) {
+function loadTable() {
 	var table = document.querySelector('#scoreTable tbody');
-	var v;
-	var elem;
-	for (var key in response) {
-		if (key < 10) {
-			v = response[key];
-			r = parseInt(key) + 1;
-			elem = '<tr><td>' + r + '</td><td>' + v['name'] + '</td><td>' + v['level'] + '</td></tr>'
-			table.insertAdjacentHTML('beforeend', elem);
+	var toDelete = document.querySelectorAll('tr.t');
+
+	for (var i = toDelete.length - 1; i >= 0; i--) {
+		var childNode = toDelete[i];
+		childNode.parentNode.removeChild(childNode);
+	}
+	var oReq = new XMLHttpRequest();
+	oReq.onload = function (e) {
+		var response = JSON.parse(oReq.response);
+		printScore(response);
+	}
+	oReq.open("GET", "http://miby.ienze.me/api/top");
+	oReq.send();
+
+	function printScore(response) {
+		var v;
+		var elem;
+		for (var key in response) {
+			if (key < 10) {
+				v = response[key];
+				r = parseInt(key) + 1;
+				elem = '<tr class="t"><td>' + r + '</td><td>' + v['name'] + '</td><td>' + v['level'] + '</td></tr>'
+				table.insertAdjacentHTML('beforeend', elem);
+			}
 		}
 	}
 }

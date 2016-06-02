@@ -29,7 +29,7 @@ router.post('/', function(req, res, next) {
             moves: req.body.moves
         }
     }, function (response) {
-        console.log(response);
+//        console.log(response);
         res.send({"success": true});
     }, function(error) {
         var err = new Error(error);

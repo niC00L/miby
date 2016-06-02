@@ -3,10 +3,10 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Miby</title>
-	<meta name="description" content="This is game we made in 14 hours.">
+	<meta name="description" content="This is game made in 14 hours.">
 	<meta name="author" content="Ienze, niC00L">
 	<meta property="og:title" content="Miby">
-	<meta property="og:description" content="This is game we made in 14 hours.">
+	<meta property="og:description" content="This is game made in 14 hours.">
 	<meta property="og:type" content="website">
 	<meta property="og:image" content="http://miby.ienze.me/img/screenshot.png">
 	<meta property="og:url" content="http://miby.ienze.me">
@@ -19,7 +19,7 @@
 		<div class="top-panel">
 			<div class="left">
 				<h1>Mi<strong>By</strong></h1>
-				<span class="restart open" data-open="highscore"><img src="https://cdn3.iconfinder.com/data/icons/award-and-medal-line-3/48/122-128.png"></span>
+				<span class="restart open" onclick="loadTable()" data-open="highscore"><img src="https://cdn3.iconfinder.com/data/icons/award-and-medal-line-3/48/122-128.png"></span>
 				<span class="restart" onclick="loadLevel(1)"><img src="http://icons.iconarchive.com/icons/icons8/ios7/256/Very-Basic-Reload-icon.png"></span>					
 				<a href="" class="open" data-open="helpModal">Help</a>					
 			</div>
@@ -66,9 +66,6 @@
 				<p><input type="text" name="username" placeholder="your name"></p>				
 				<button class="button close" data-close="username" onclick="setUsername()">Play<strong>!</strong></button>
 			</form>
-			<p>
-				<img src="img/deer.png" style="width: 50px; padding-top: 2em" />
-			</p>
 		</div>
 	</div>	
 

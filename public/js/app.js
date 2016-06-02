@@ -197,8 +197,10 @@ function keyPressed(key, a) {
 	}
 
 	stage.playerContainer.moved();
-
+	
 	playerValue();
+
+	checkGameOver();
 }
 
 function playerValue() {
@@ -219,12 +221,37 @@ function playerValue() {
 //		squareContainer.graphics.drawRoundedRect(0, 0, squareSize, squareSize, 10);
 //		squareContainer.graphics.endFill();
 		squareContainer.removeChild(squareContainer.number);
+		squareContainer.number = null;
 
 		//proceed to next level
 		if (playerSettings.value == generatedLevel.target) {
 			nextLevel();
 		}
 	}
+}
+
+function checkGameOver() {
+	for (var i = 0; i < generatedLevel.size; i++) {
+		for (var j = 0; j < generatedLevel.size; j++) {
+			var squareContainer = stage.squareContainers[i][j];
+			if(squareContainer.number) {
+				return false;
+			}
+		}
+	}
+
+	var gameover = new PIXI.Text("GameOver", {font: 'bold 80px Josefin Sans', fill: 0x000000, align: 'center'});
+	gameover.anchor.set(0.5, 0.5);
+	gameover.x = GAME_WIDTH / 2;
+	gameover.y = GAME_HEIGHT / 2;
+
+	gameover.interactive = true;
+	gameover.mousedown = function() {
+		loadLevel(1);
+	}
+
+	stage.addChild(gameover);
+	return true;
 }
 
 function nextLevel() {
