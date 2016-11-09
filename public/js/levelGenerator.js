@@ -28,8 +28,8 @@ function generateLevel(seed, level) {
 	};
 
 	var genBaseRange = function(generatorState) {
-		generatorState.baseRange.from = ((generatorState.level / -3.0 ));
-		generatorState.baseRange.to = (generatorState.level * generatorState.level) / 6 + (generatorState.level / 2 ) + 10;
+		generatorState.baseRange.from = ((generatorState.level / -8.0 ));
+		generatorState.baseRange.to = (generatorState.level * generatorState.level) / 16 + (generatorState.level / 6 ) + 4;
 	};
 
 	var genSize = function(generatorState) {
@@ -46,7 +46,7 @@ function generateLevel(seed, level) {
 	};
 
 	var genTarget = function(generatorState) {
-		if(generatorState.level == 0) {
+		if(generatorState.level === 0) {
 			generatorState.target = 0;
 		} else {
 			generatorState.target = rngRange(generatorState);

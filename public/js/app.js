@@ -38,9 +38,15 @@ function loadLevel(level) {
 	startLevel();
 }
 
+function randomSeed() {
+	changeSeed(Math.random().toString(36).replace(/[^a-z]+/g, ''));
+}
+
 function changeSeed(seed) {
 	playerSettings.seed = seed;
-	loadLevel(generatedLevel.level);
+	if(generatedLevel) {
+		loadLevel(generatedLevel.level);
+	}
 }
 
 function setupTopPanel() {
@@ -72,7 +78,7 @@ function setupSquares() {
 			}
 
 			var graphics = new PIXI.Graphics();
-			var radius = squareSize/2
+			var radius = squareSize/2;
 
 //			graphics.beginFill(colors[op]);
 			graphics.lineStyle(6, colors[op], 1);
@@ -86,7 +92,7 @@ function setupSquares() {
 				squareContainer.addChild(number);
 				squareContainer.number = number;
 			}
-			var graphics = new PIXI.Sprite(graphics.generateTexture());
+			// var graphicsSprite = new PIXI.Sprite(graphics.generateTexture());
 			stage.addChild(squareContainer);
 			stage.squareContainers[i][j] = squareContainer;
 		}
@@ -101,7 +107,7 @@ function setupPlayer() {
 	playerContainer.moved = function () {
 		this.x = (squareSize + squareGap) * playerSettings.x + canvasBorder;
 		this.y = (squareSize + squareGap) * playerSettings.y + canvasBorder;
-	}
+	};
 	playerContainer.moved();
 
 	var playerBox = new PIXI.Graphics();
@@ -156,7 +162,7 @@ function keyPressed(key, a) {
 		if (!a) {
 			key.preventDefault();
 		}
-		if (playerSettings.y == 0) {
+		if (playerSettings.y === 0) {
 			playerSettings.y = generatedLevel.size;
 		}
 		playerSettings.y -= 1;
@@ -166,7 +172,7 @@ function keyPressed(key, a) {
 		if (!a) {
 			key.preventDefault();
 		}
-		if (playerSettings.y == generatedLevel.size - 1) {
+		if (playerSettings.y === generatedLevel.size - 1) {
 			playerSettings.y = 0;
 		} else {
 			playerSettings.y += 1;
@@ -177,7 +183,7 @@ function keyPressed(key, a) {
 		if (!a) {
 			key.preventDefault();
 		}
-		if (playerSettings.x == 0) {
+		if (playerSettings.x === 0) {
 			playerSettings.x = generatedLevel.size;
 		}
 		playerSettings.x -= 1;
@@ -188,7 +194,7 @@ function keyPressed(key, a) {
 		if (!a) {
 			key.preventDefault();
 		}
-		if (playerSettings.x == generatedLevel.size - 1) {
+		if (playerSettings.x === generatedLevel.size - 1) {
 			playerSettings.x = 0;
 		} else {
 			playerSettings.x += 1;
@@ -213,7 +219,7 @@ function playerValue() {
 		//edit square
 		var squareContainer = stage.squareContainers[playerSettings.x][playerSettings.y];
 		squareContainer.graphics.clear();
-		var radius = squareSize/2
+		var radius = squareSize/2;
 
 		squareContainer.graphics.lineStyle(6, colors.none, 1);
 		squareContainer.graphics.drawCircle(0+radius, 0+radius, radius);
@@ -247,8 +253,9 @@ function checkGameOver() {
 
 	gameover.interactive = true;
 	gameover.mousedown = function() {
+		randomSeed();
 		loadLevel(1);
-	}
+	};
 
 	stage.addChild(gameover);
 	return true;
@@ -292,6 +299,7 @@ function endLevel() {
 	} catch (e) { }
 }
 
+randomSeed();
 loadLevel(1);
 
 var render = function () {
