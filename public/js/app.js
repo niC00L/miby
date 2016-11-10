@@ -8,6 +8,21 @@ var colors = {plu: '0x008606', min: '0xff8000', tim: '0xf3f129', div: '0xf32929'
 //some necessary stuff
 var renderer = pixySetup();
 
+var modes = {
+	"1+1": {
+		numbersSize: 1.0,
+		allowedOperators: ['plu', 'min']
+	},
+	"1*1": {
+		numbersSize: 0.6,
+		allowedOperators: ['plu', 'min', 'tim', 'div']
+	},
+	"21+21": {
+		numbersSize: 3.0,
+		allowedOperators: ['plu', 'min']
+	}
+}
+
 //squares dimensions
 var squareGap = 30;
 var canvasBorder = 5;
@@ -21,7 +36,8 @@ var playerSettings = {
 	name: name,
 	x: 0,
 	y: 0,
-	value: null
+	value: null,
+	mode: null
 };
 
 function loadLevel(level) {
@@ -72,19 +88,15 @@ function setupSquares() {
 				number = new PIXI.Text(square.number, {font: 'bold 48px Josefin Sans', fill: colors[op], align: 'center'});
 				number.x = 20;
 				number.y = 20;
-			}
-			else {
+			} else {
 				op = 'none';
 			}
 
 			var graphics = new PIXI.Graphics();
 			var radius = squareSize/2;
 
-//			graphics.beginFill(colors[op]);
 			graphics.lineStyle(6, colors[op], 1);
 			graphics.drawCircle(0+radius, 0+radius, radius);
-//			graphics.drawRoundedRect(0, 0, squareSize, squareSize, 10);
-//			graphics.endFill();
 
 			squareContainer.addChild(graphics);
 			squareContainer.graphics = graphics;
@@ -92,7 +104,6 @@ function setupSquares() {
 				squareContainer.addChild(number);
 				squareContainer.number = number;
 			}
-			// var graphicsSprite = new PIXI.Sprite(graphics.generateTexture());
 			stage.addChild(squareContainer);
 			stage.squareContainers[i][j] = squareContainer;
 		}

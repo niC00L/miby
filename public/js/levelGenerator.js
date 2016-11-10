@@ -20,7 +20,6 @@ function generateLevel(seed, level) {
 			targetUsefulOperations: 0,
 			targetPossibilities: 0,
 			allowedOperators: null,
-			allowedOperations: null,
 			usefulTiles: null,
 			uselessTiles: null,
 			map: null
@@ -28,8 +27,12 @@ function generateLevel(seed, level) {
 	};
 
 	var genBaseRange = function(generatorState) {
-		generatorState.baseRange.from = ((generatorState.level / -8.0 ));
-		generatorState.baseRange.to = (generatorState.level * generatorState.level) / 16 + (generatorState.level / 6 ) + 4;
+		var s = 1.0;
+		if(playerSettings.mode && playerSettings.mode.numbersSize) {
+			s = playerSettings.mode.numbersSize;
+		}
+		generatorState.baseRange.from = ((generatorState.level / -8.0 * s ));
+		generatorState.baseRange.to = (generatorState.level * generatorState.level) / 16 * s + (generatorState.level / 6 * s ) + 4;
 	};
 
 	var genSize = function(generatorState) {
@@ -68,24 +71,24 @@ function generateLevel(seed, level) {
 		generatorState.targetPossibilities = Math.round(Math.max(1, Math.min(generatorState.targetUsefulOperations, 4 - (generatorState.level / 6))));
 	};
 
-	var genAllowedOperations = function(generatorState) {
+	var genAllowedOperators = function(generatorState) {
 		var opr = null;
-		var ops = null;
-		if(generatorState.level <= 2) {
-			opr = ["plu"];
-			ops = ["+"];
-		} else if(generatorState.level <= 21) {
-			opr = ["plu", "min"];
-			ops = ["+", "-"];
-		} else if(generatorState.level <= 42) {
-			opr = ["plu", "min"];
-			ops = ["+", "-", "*"];
+		if(playerSettings.mode && playerSettings.mode.allowedOperators) {
+			opr = playerSettings.mode.allowedOperators;
 		} else {
-			opr = ["plu", "min", "tim", "div"];
-			ops = ["+", "-", "*", "/"];
+			if(generatorState.level <= 2) {
+				opr = ["plu"];
+			} else if(generatorState.level <= 21) {
+				opr = ["plu", "min"];
+			} else if(generatorState.level <= 42) {
+				opr = ["plu", "min"];
+			} else {
+				opr = ["plu", "min", "tim", "div"];
+			}
 		}
+		console.log(playerSettings.mode);
+		console.log(opr);
 		generatorState.allowedOperators = opr;
-		generatorState.allowedOperations = ops;
 	};
 
 	var genUsefulTiles = function(generatorState) {
@@ -144,7 +147,7 @@ function generateLevel(seed, level) {
 	genTargetOperations(generatorState);
 	genTargetUsefulOperations(generatorState);
 	genTargetPossibilities(generatorState);
-	genAllowedOperations(generatorState);
+	genAllowedOperators(generatorState);
 	genUsefulTiles(generatorState);
 	genUselessTiles(generatorState);
 	genMap(generatorState);

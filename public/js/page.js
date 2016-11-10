@@ -26,9 +26,13 @@ for (var i = 0; i < closeButton.length; i++) {
 	}, false);
 }
 
-function setUsername() {
+function setupAndPlay(modeName) {
 	name = document.querySelector('[name=username]').value;
 	playerSettings.name = name;
+	playerSettings.mode = modes[modeName];
+
+	randomSeed();
+	loadLevel(1);
 }
 
 function drawColors() {
