@@ -18,7 +18,7 @@
 	<div id="game">
 		<div class="top-panel">
 			<div class="left">
-				<h1>Mi<strong>By</strong></h1>
+				<a href="/"><h1>Mi<strong>By</strong></h1></a>
 				<span class="restart open" onclick="loadTable()" data-open="highscore"><img src="https://cdn3.iconfinder.com/data/icons/award-and-medal-line-3/48/122-128.png"></span>
 				<span class="restart" onclick="randomSeed();loadLevel(1)"><img src="http://icons.iconarchive.com/icons/icons8/ios7/256/Very-Basic-Reload-icon.png"></span>					
 				<a href="" class="open" data-open="helpModal">Help</a>					
@@ -33,6 +33,7 @@
 			</div>				
 		</div>
 		<div id="miby"></div>
+		<div class="current-seed"><small>Current seed: <span id="current-seed"></span></small></div>
 		<footer class ="copyright">&copy; 2016 created in <strong>14 hours</strong> by <a href="http://ienze.me">Ienze</a> and <a href="http://nicool.rocks">niC00L</a></footer>
 	</div>
 
@@ -64,9 +65,9 @@
 			<p class="description">so you can find yourself in high score table</p>
 			<form>
 				<p><input type="text" name="username" placeholder="your name"></p>				
-				<button class="button close" data-close="username" onclick="setupAndPlay('1+1')"><strong>1+1</strong></button>
-				<button class="button close" data-close="username" onclick="setupAndPlay('1*1')"><strong>1*1</strong></button>
-				<button class="button close" data-close="username" onclick="setupAndPlay('21+21')"><strong>21+21</strong></button>
+				<button class="button close level-type" style="color:#008606; border-color:#008606" data-close="username" onclick="setupAndPlay('1+1')"><strong>1+1</strong></button>
+				<button class="button close level-type" style="color:#f3f129; border-color:#f3f129" data-close="username" onclick="setupAndPlay('1*1')"><strong>1*1</strong></button>
+				<button class="button close level-type" style="color:#f32929; border-color:#f32929" data-close="username" onclick="setupAndPlay('21+21')"><strong>21+21</strong></button>
 			</form>
 		</div>
 	</div>	

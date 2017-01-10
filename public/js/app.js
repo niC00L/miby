@@ -43,6 +43,8 @@ var playerSettings = {
 function loadLevel(level) {
 	newStage();
 
+	document.querySelector("#current-seed").innerHTML = playerSettings.seed;
+
 	generatedLevel = generateLevel(playerSettings.seed, level);
 
 	//squares dimensions

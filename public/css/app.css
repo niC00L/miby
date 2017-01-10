@@ -112,6 +112,21 @@ a {
 	text-decoration: none;
 	color: black;
 	font-family: 'Josefin Sans', sans-serif;
+	cursor: pointer;
+}
+
+.button.level-type {
+    padding: .5rem;
+	margin: .5rem;
+	min-width: 6rem;
+	border: 2px solid black;
+	border-radius: 50px;	
+	outline: none;
+	text-align: center;
+}
+
+.button.level-type:hover {
+	transform: scale(1.05);
 }
 
 input {
@@ -205,4 +220,9 @@ noscript {
 	#game {
 		width: 90vw;
 	}	
+}
+
+.current-seed {
+	text-align: center;
+	color: grey;
 }
