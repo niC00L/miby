@@ -31,8 +31,12 @@ function generateLevel(seed, level) {
 		if(playerSettings.mode && playerSettings.mode.numbersSize) {
 			s = playerSettings.mode.numbersSize;
 		}
-		generatorState.baseRange.from = ((generatorState.level / -8.0 * s ));
-		generatorState.baseRange.to = (generatorState.level * generatorState.level) / 16 * s + (generatorState.level / 6 * s ) + 4;
+
+		var flowmod = Math.sin(0.5*generatorState.level)/3+1;
+		console.log(flowmod);
+
+		generatorState.baseRange.from = flowmod * ((generatorState.level / -8.0 * s ));
+		generatorState.baseRange.to = flowmod * ((generatorState.level * generatorState.level) / 16 * s + (generatorState.level / 6 * s ) + 4);
 	};
 
 	var genSize = function(generatorState) {
@@ -86,8 +90,6 @@ function generateLevel(seed, level) {
 				opr = ["plu", "min", "tim", "div"];
 			}
 		}
-		console.log(playerSettings.mode);
-		console.log(opr);
 		generatorState.allowedOperators = opr;
 	};
 
@@ -151,8 +153,6 @@ function generateLevel(seed, level) {
 	genUsefulTiles(generatorState);
 	genUselessTiles(generatorState);
 	genMap(generatorState);
-
-//	console.log(generatorState);
 
 	return generatorState;
 }
