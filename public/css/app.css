@@ -37,7 +37,7 @@ body:after {
 /*Top panel*/
 .top-panel {
 	display: flex;
-	height: 18vh;
+	height: 15vh;
 	padding-bottom: 1.2rem;
 	justify-content: space-between;
 	align-items: flex-end;
@@ -46,25 +46,26 @@ body:after {
 .top-panel h1 {
     margin: 0;
 	margin-bottom: .5rem;
-	font-size: 3.2rem;
+	font-size: 4.2rem;
 	font-weight: normal;	
 }
 
 a {
-	font-size: 1.3rem;
+	font-size: 1.7rem;
 	text-decoration: none;
 	color: black;
 }
 
-.restart {
+.button {
+margin-right: 1rem;
 	background: none;
 	border: none;
 	outline: none;
 	cursor: pointer;
 }
-.restart img {
-	width: 1.5rem;
-	height: 1.5rem;
+.button img {
+	width: 2rem;
+	height: 2rem;
 	vertical-align: bottom;
 }
 

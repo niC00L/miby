@@ -19,9 +19,14 @@
 		<div class="top-panel">
 			<div class="left">
 				<a href="/"><h1>Mi<strong>By</strong></h1></a>
-				<span class="restart open" onclick="loadTable()" data-open="highscore"><img src="https://cdn3.iconfinder.com/data/icons/award-and-medal-line-3/48/122-128.png"></span>
-				<span class="restart" onclick="randomSeed();loadLevel(1)"><img src="http://icons.iconarchive.com/icons/icons8/ios7/256/Very-Basic-Reload-icon.png"></span>					
-				<a href="" class="open" data-open="helpModal">Help</a>					
+				<span class="hidden button open" onclick="loadTable()" data-open="highscore">
+<img src="https://cdn3.iconfinder.com/data/icons/award-and-medal-line-3/48/122-128.png">  </span>
+				<span class="restart button" onclick="randomSeed();loadLevel(1)"><img src="http://icons.iconarchive.com/icons/icons8/ios7/256/Very-Basic-Reload-icon.png">
+Restart</span>					
+				<a href="" class="open button" data-open="helpModal">
+					<img src="http://icons.iconarchive.com/icons/icons8/ios7/128/Very-Basic-Help-icon.png">
+					Help
+				</a>					
 			</div>
 			<div class="right">
 				<div class="level">
@@ -33,7 +38,7 @@
 			</div>				
 		</div>
 		<div id="miby"></div>
-		<div class="current-seed"><small>Current seed: <span id="current-seed"></span></small></div>
+		<div class="current-seed hidden"><small>Current seed: <span id="current-seed"></span></small></div>
 		<footer class ="copyright">2016 <a href="http://ienze.me">Ienze</a> and <a href="http://nicool.rocks">niC00L</a></footer>
 	</div>
 
@@ -59,7 +64,7 @@
 		</div>
 	</div>
 
-	<div id="username" class="modal visible">
+	<div id="username" class="modal hidden">
 		<div>				
 			<h2>Type your nickname here</h2>
 			<p class="description">so you can find yourself in high score table</p>
